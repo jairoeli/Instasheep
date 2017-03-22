@@ -116,18 +116,32 @@ class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavig
       }
       print("Successfully created user:", user?.uid ?? "")
       
-      guard let uid = user?.uid else { return }
-      let usernameValue = ["username": username]
-      let values = [uid: usernameValue]
+      guard let image = self.plusPhotoButton.imageView?.image else { return }
+      guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
+      let filename = NSUUID().uuidString
       
-      FIRDatabase.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, ref) in
+      FIRStorage.storage().reference().child("profile_image").child(filename).put(uploadData, metadata: nil, completion: { (metadata, err) in
         
-        if let err = err {
-          print("Failed to save user info into db:", err)
+        if let err = error {
+          print("Failed to upload profile image:", err)
           return
         }
-        print("Successfully saved user info to db")
+        guard let profileImageURL = metadata?.downloadURL()?.absoluteString else { return }
+        print("Successfully uploaded profile image:", profileImageURL)
         
+        guard let uid = user?.uid else { return }
+        let dictionaryValues = ["username": username, "profileImageURL": profileImageURL]
+        let values = [uid: dictionaryValues]
+        
+        FIRDatabase.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, ref) in
+          
+          if let err = err {
+            print("Failed to save user info into db:", err)
+            return
+          }
+          print("Successfully saved user info to db")
+          
+        })
       })
     })
   }
