@@ -9,13 +9,14 @@
 import UIKit
 import Firebase
 
-class ViewController: UIViewController {
+class ViewController: UIViewController, UIImagePickerControllerDelegate, UINavigationControllerDelegate {
   
   // MARK: - Properties
   
-  let plusPhotoButton: UIButton = {
+  lazy var plusPhotoButton: UIButton = {
     let button = UIButton(type: .system)
     button.setImage(#imageLiteral(resourceName: "plus_photo").withRenderingMode(.alwaysOriginal), for: .normal)
+    button.addTarget(self, action: #selector(handlePlusPhoto), for: .touchUpInside)
     return button
   }()
   
@@ -113,8 +114,21 @@ class ViewController: UIViewController {
         print("Failed to create user:", err)
         return
       }
-      
       print("Successfully created user:", user?.uid ?? "")
+      
+      guard let uid = user?.uid else { return }
+      let usernameValue = ["username": username]
+      let values = [uid: usernameValue]
+      
+      FIRDatabase.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, ref) in
+        
+        if let err = err {
+          print("Failed to save user info into db:", err)
+          return
+        }
+        print("Successfully saved user info to db")
+        
+      })
     })
   }
   
@@ -129,6 +143,31 @@ class ViewController: UIViewController {
       signUpButton.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
     }
     
+  }
+  
+  // MARK: - UIImagePickerController
+  func handlePlusPhoto() {
+    let imagePickerController = UIImagePickerController()
+    imagePickerController.delegate = self
+    imagePickerController.allowsEditing = true
+    present(imagePickerController, animated: true, completion: nil)
+  }
+  
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+    
+    if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
+      plusPhotoButton.setImage(editedImage.withRenderingMode(.alwaysOriginal), for: .normal)
+      
+    } else if let originalImage = info["UIImagePickerControllerOriginalImage"] as? UIImage {
+      plusPhotoButton.setImage(originalImage.withRenderingMode(.alwaysOriginal), for: .normal)
+    }
+    
+    plusPhotoButton.layer.cornerRadius = plusPhotoButton.frame.width / 2
+    plusPhotoButton.layer.masksToBounds = true
+    plusPhotoButton.layer.borderColor = UIColor.black.cgColor
+    plusPhotoButton.layer.borderWidth = 1
+    
+    dismiss(animated: true, completion: nil)
   }
   
   

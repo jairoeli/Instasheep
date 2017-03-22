@@ -94,10 +94,10 @@
 		9C5DCC4D1E8185A10048C03A /* Supporting Files */ = {
 			isa = PBXGroup;
 			children = (
+				9C5DCC471E81857C0048C03A /* Info.plist */,
 				9C5DCC4E1E81878B0048C03A /* GoogleService-Info.plist */,
 				9C5DCC421E81857C0048C03A /* Assets.xcassets */,
 				9C5DCC441E81857C0048C03A /* LaunchScreen.storyboard */,
-				9C5DCC471E81857C0048C03A /* Info.plist */,
 			);
 			name = "Supporting Files";
 			sourceTree = "<group>";
