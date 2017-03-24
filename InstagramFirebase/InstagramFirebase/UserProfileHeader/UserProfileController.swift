@@ -9,9 +9,10 @@
 import UIKit
 import Firebase
 
-class UserProfileController: UICollectionViewController, UICollectionViewDelegateFlowLayout {
+class UserProfileController: UICollectionViewController {
   
   fileprivate let headerID = "headerId"
+  fileprivate let cellId = "cellId"
   var user: User?
 
   override func viewDidLoad() {
@@ -23,6 +24,7 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     fetchUser()
     
     collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerID)
+    collectionView?.register(UICollectionViewCell.self, forCellWithReuseIdentifier: cellId)
   }
   
   fileprivate func fetchUser() {
@@ -44,7 +46,35 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
     
   }
   
-  // MARK: - Collection View
+  // MARK: - Collectin View data source
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return 7
+  }
+  
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath)
+    cell.backgroundColor = .purple
+    return cell
+  }
+  
+}
+
+  // MARK: - Collection View Flow Layout
+extension UserProfileController: UICollectionViewDelegateFlowLayout {
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    let width = (view.frame.width - 2) / 3
+    return CGSize(width: width, height: width)
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumLineSpacingForSectionAt section: Int) -> CGFloat {
+    return 1
+  }
+  
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, minimumInteritemSpacingForSectionAt section: Int) -> CGFloat {
+    return 1
+  }
+  
+  // MARK: - Header
   override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerID, for: indexPath) as! UserProfileHeader
     header.user = self.user
@@ -54,5 +84,4 @@ class UserProfileController: UICollectionViewController, UICollectionViewDelegat
   func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, referenceSizeForHeaderInSection section: Int) -> CGSize {
     return CGSize(width: view.frame.height, height: 200)
   }
-  
 }
