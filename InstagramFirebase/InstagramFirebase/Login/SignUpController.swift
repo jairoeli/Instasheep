@@ -79,6 +79,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
+    view.backgroundColor = .white
     
     view.addSubview(plusPhotoButton)
     
