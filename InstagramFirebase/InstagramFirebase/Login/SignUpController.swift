@@ -76,16 +76,27 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     return button
   }()
   
+  lazy var alreadyHaveAccountButton: UIButton = {
+    let button = UIButton(type: .system)
+    
+    let attributedTitle = NSMutableAttributedString(string: "Already have an account?  ", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.lightGray])
+    
+    attributedTitle.append(NSAttributedString(string: "Sign In", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.rgb(red: 17, green: 154, blue: 237)]))
+    
+    button.setAttributedTitle(attributedTitle, for: .normal)
+    button.addTarget(self, action: #selector(handleAlreadyHaveAccount), for: .touchUpInside)
+    return button
+  }()
+  
   // MARK: - Lifecycle
   override func viewDidLoad() {
     super.viewDidLoad()
     view.backgroundColor = .white
     
     view.addSubview(plusPhotoButton)
+    view.addSubview(alreadyHaveAccountButton)
     
-    plusPhotoButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
-    plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
-    
+    setupLayout()
     setupInputFields()
   }
   
@@ -101,6 +112,18 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     
     stackView.anchor(top: plusPhotoButton.bottomAnchor, left: view.leftAnchor, bottom: nil, right: view.rightAnchor, paddingTop: 20, paddingLeft: 40, paddingBottom: 0, paddingRight: 40, width: 0, height: 200)
     
+  }
+  
+  fileprivate func setupLayout() {
+    plusPhotoButton.anchor(top: view.topAnchor, left: nil, bottom: nil, right: nil, paddingTop: 40, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 140, height: 140)
+    plusPhotoButton.centerXAnchor.constraint(equalTo: view.centerXAnchor).isActive = true
+    
+    alreadyHaveAccountButton.anchor(top: nil, left: view.leftAnchor, bottom: view.bottomAnchor, right: view.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 50)
+  }
+  
+  // MARK: - Handle Login
+  func handleAlreadyHaveAccount() {
+    _ = navigationController?.popViewController(animated: true)
   }
   
   // MARK: - Firebase User
