@@ -18,6 +18,8 @@ class PhotoSelectorController: UICollectionViewController {
   var selectedImage: UIImage?
   var assets = [PHAsset]()
   
+  var header: PhotoSelectorHeader?
+  
   override func viewDidLoad() {
     super.viewDidLoad()
     collectionView?.backgroundColor = .white
@@ -47,7 +49,9 @@ class PhotoSelectorController: UICollectionViewController {
   }
   
   func handleNext() {
-    print("handling next")
+    let sharePhotoController = SharePhotoController()
+    sharePhotoController.selectedImage = header?.photoImageView.image
+    navigationController?.pushViewController(sharePhotoController, animated: true)
   }
   
   // MARK: - Fetch Photos
@@ -87,7 +91,7 @@ class PhotoSelectorController: UICollectionViewController {
   
   fileprivate func assetsFetchOptions() -> PHFetchOptions {
     let fetchOptions = PHFetchOptions()
-    fetchOptions.fetchLimit = 15
+    fetchOptions.fetchLimit = 30
     
     let sortDescriptor = NSSortDescriptor(key: "creationDate", ascending: false)
     fetchOptions.sortDescriptors = [sortDescriptor]
@@ -103,6 +107,9 @@ extension PhotoSelectorController {
   override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
     self.selectedImage = images[indexPath.item]
     self.collectionView?.reloadData()
+    
+    let indexPath = IndexPath(item: 0, section: 0)
+    collectionView.scrollToItem(at: indexPath, at: .bottom, animated: true)
   }
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -111,6 +118,8 @@ extension PhotoSelectorController {
   
   override func collectionView(_ collectionView: UICollectionView, viewForSupplementaryElementOfKind kind: String, at indexPath: IndexPath) -> UICollectionReusableView {
     let header = collectionView.dequeueReusableSupplementaryView(ofKind: kind, withReuseIdentifier: headerId, for: indexPath) as! PhotoSelectorHeader
+    
+    self.header = header
     
     header.photoImageView.image = selectedImage
     
