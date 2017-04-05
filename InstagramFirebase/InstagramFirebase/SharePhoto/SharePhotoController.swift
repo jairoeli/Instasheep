@@ -7,9 +7,11 @@
 //
 
 import UIKit
+import Firebase
 
 class SharePhotoController: UIViewController {
   
+  // MARK: - Properties
   var selectedImage: UIImage? {
     didSet {
       self.imageView.image = selectedImage
@@ -43,10 +45,58 @@ class SharePhotoController: UIViewController {
     return true
   }
   
+  // MARK: - Share & Save
+  
   func handleShare() {
-    print("Sharing photo")
+    guard let caption = textView.text, caption.characters.count > 0 else { return }
+    guard let image = selectedImage else { return }
+    guard let uploadData = UIImageJPEGRepresentation(image, 0.5) else { return }
+    
+    navigationItem.rightBarButtonItem?.isEnabled = false
+    
+    let filename = NSUUID().uuidString
+    FIRStorage.storage().reference().child("posts").child(filename).put(uploadData, metadata: nil) { (metadata, err) in
+      
+      if let err = err {
+         self.navigationItem.rightBarButtonItem?.isEnabled = true
+        print("Failed to upload post image:", err)
+        return
+      }
+      
+      guard let imageURL = metadata?.downloadURL()?.absoluteString else { return }
+      print("Successfully uploaded post image:", imageURL)
+      
+      self.saveToDatabase(with: imageURL)
+    }
   }
   
+  fileprivate func saveToDatabase(with imageURL: String) {
+    guard let postImage = selectedImage else { return }
+    guard let caption = textView.text else { return }
+    
+    guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+    let userPostRef = FIRDatabase.database().reference().child("posts").child(uid)
+    let ref = userPostRef.childByAutoId()
+    let values = ["imagesURL": imageURL,
+                  "caption": caption,
+                  "imageWidth": postImage.size.width,
+                  "imageHeight": postImage.size.height,
+                  "creationDate": Date().timeIntervalSince1970] as [String: Any]
+    
+    ref.updateChildValues(values) { (err, ref) in
+      if let err = err {
+        self.navigationItem.rightBarButtonItem?.isEnabled = true
+        print("Failed to save post to DB", err)
+      }
+      
+      print("Successfully saved post to DB")
+      self.dismiss(animated: true , completion: nil)
+    }
+  }
+  
+}
+
+extension SharePhotoController {
   fileprivate func setupImageAndTextViews() {
     view.addSubview(containerView)
     containerView.addSubview(imageView)
@@ -58,5 +108,4 @@ class SharePhotoController: UIViewController {
     
     textView.anchor(top: containerView.topAnchor, left: imageView.rightAnchor, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 4, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
   }
-  
 }
