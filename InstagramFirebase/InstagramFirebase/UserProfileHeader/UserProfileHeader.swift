@@ -13,13 +13,15 @@ class UserProfileHeader: UICollectionViewCell {
   
   var user: User? {
     didSet {
-      setupProfileImage()
+      guard let profileImageURL = user?.profileImageURL else { return }
+      profileImageView.loadImage(urlString: profileImageURL)
+//      setupProfileImage()
       usernameLabel.text = user?.username
     }
   }
   
   // MARK: - Properties
-  let profileImageView = UIImageView {
+  let profileImageView = CustomImageView {
     $0.layer.cornerRadius = 80 / 2
     $0.clipsToBounds = true
   }
@@ -113,30 +115,6 @@ extension UserProfileHeader {
     usernameLabel.anchor(top: profileImageView.bottomAnchor, left: leftAnchor, bottom: gridButton.topAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 12, paddingBottom: 0, paddingRight: 12, width: 0, height: 0)
     
     editProfileButton.anchor(top: postsLabel.bottomAnchor, left: postsLabel.leftAnchor, bottom: nil, right: followingLabel.rightAnchor, paddingTop: 2, paddingLeft: 0, paddingBottom: 0, paddingRight: 0, width: 0, height: 34)
-  }
-  
-  fileprivate func setupProfileImage() {
-    guard let profileImageURL = user?.profileImageURL else { return }
-    
-    guard let url = URL(string: profileImageURL) else { return }
-    
-    URLSession.shared.dataTask(with: url) { (data, response, err) in
-      // check for the error, then construct the image using data
-      if let err = err {
-        print("Failed to fetch profile image:", err)
-        return
-      }
-      
-      // perhaps check for response status of 200
-      guard let data = data else { return }
-      let image = UIImage(data: data)
-      
-      // need to get back onto the main UI thread
-      DispatchQueue.main.async {
-        self.profileImageView.image = image
-      }
-      
-      }.resume()
   }
   
   fileprivate func setupBottomToolbar() {
