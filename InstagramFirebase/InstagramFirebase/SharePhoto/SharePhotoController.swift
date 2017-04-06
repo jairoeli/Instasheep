@@ -77,7 +77,7 @@ class SharePhotoController: UIViewController {
     guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
     let userPostRef = FIRDatabase.database().reference().child("posts").child(uid)
     let ref = userPostRef.childByAutoId()
-    let values = ["imagesURL": imageURL,
+    let values = ["imageURL": imageURL,
                   "caption": caption,
                   "imageWidth": postImage.size.width,
                   "imageHeight": postImage.size.height,
