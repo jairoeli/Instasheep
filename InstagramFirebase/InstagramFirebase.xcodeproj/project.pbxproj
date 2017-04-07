@@ -23,6 +23,8 @@
 		9C6092A51E83FF9E004F9C4E /* UserProfileController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6092A41E83FF9E004F9C4E /* UserProfileController.swift */; };
 		9C6092A71E840291004F9C4E /* User.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C6092A61E840291004F9C4E /* User.swift */; };
 		9C770F741E8DCBD800756135 /* PhotoSelectController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C770F731E8DCBD800756135 /* PhotoSelectController.swift */; };
+		9CC9ADF81E97E9CA006D5F05 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9ADF71E97E9CA006D5F05 /* HomeController.swift */; };
+		9CC9ADFA1E97EB15006D5F05 /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9ADF91E97EB15006D5F05 /* HomePostCell.swift */; };
 		9CCD45201E8654E600AAB7C9 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCD451F1E8654E600AAB7C9 /* LoginController.swift */; };
 		9CCDE82D1E9006BF00BD67F8 /* PhotoSelectorHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCDE82C1E9006BF00BD67F8 /* PhotoSelectorHeader.swift */; };
 		9CDFECE91E914EFD0019A94D /* SharePhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFECE81E914EFD0019A94D /* SharePhotoController.swift */; };
@@ -49,6 +51,8 @@
 		9C6092A41E83FF9E004F9C4E /* UserProfileController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserProfileController.swift; path = UserProfileHeader/UserProfileController.swift; sourceTree = "<group>"; };
 		9C6092A61E840291004F9C4E /* User.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = User.swift; path = UserProfileHeader/User.swift; sourceTree = "<group>"; };
 		9C770F731E8DCBD800756135 /* PhotoSelectController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoSelectController.swift; path = AddPhoto/PhotoSelectController.swift; sourceTree = "<group>"; };
+		9CC9ADF71E97E9CA006D5F05 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeController.swift; path = Home/HomeController.swift; sourceTree = "<group>"; };
+		9CC9ADF91E97EB15006D5F05 /* HomePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomePostCell.swift; path = Home/HomePostCell.swift; sourceTree = "<group>"; };
 		9CCD451F1E8654E600AAB7C9 /* LoginController.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; fileEncoding = 4; name = LoginController.swift; path = Login/LoginController.swift; sourceTree = "<group>"; };
 		9CCDE82C1E9006BF00BD67F8 /* PhotoSelectorHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoSelectorHeader.swift; path = AddPhoto/PhotoSelectorHeader.swift; sourceTree = "<group>"; };
 		9CDFECE81E914EFD0019A94D /* SharePhotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SharePhotoController.swift; path = SharePhoto/SharePhotoController.swift; sourceTree = "<group>"; };
@@ -116,6 +120,7 @@
 			children = (
 				9C5DCC3F1E81857C0048C03A /* Main.storyboard */,
 				9C5DCC3B1E81857B0048C03A /* AppDelegate.swift */,
+				9CC9ADF61E97E9B4006D5F05 /* Home */,
 				9C16E6381E96A24100CAD7C9 /* Models */,
 				9CDFECE71E914EDC0019A94D /* Share Photo */,
 				9C770F721E8DCBB200756135 /* AddPhoto */,
@@ -158,6 +163,15 @@
 				9C4E4B3F1E8E8D0F00AE3A0D /* PhotoSelectorCell.swift */,
 			);
 			name = AddPhoto;
+			sourceTree = "<group>";
+		};
+		9CC9ADF61E97E9B4006D5F05 /* Home */ = {
+			isa = PBXGroup;
+			children = (
+				9CC9ADF71E97E9CA006D5F05 /* HomeController.swift */,
+				9CC9ADF91E97EB15006D5F05 /* HomePostCell.swift */,
+			);
+			name = Home;
 			sourceTree = "<group>";
 		};
 		9CCD451E1E8654DE00AAB7C9 /* Login */ = {
@@ -320,6 +334,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				9C5DCC531E818A490048C03A /* Extension.swift in Sources */,
+				9CC9ADFA1E97EB15006D5F05 /* HomePostCell.swift in Sources */,
 				9C5DCC511E818A350048C03A /* SignUpController.swift in Sources */,
 				9C770F741E8DCBD800756135 /* PhotoSelectController.swift in Sources */,
 				9CEA01851E833F78004F5BEB /* MainTabBarController.swift in Sources */,
@@ -331,6 +346,7 @@
 				9CCDE82D1E9006BF00BD67F8 /* PhotoSelectorHeader.swift in Sources */,
 				9CCD45201E8654E600AAB7C9 /* LoginController.swift in Sources */,
 				9C5DCC3C1E81857B0048C03A /* AppDelegate.swift in Sources */,
+				9CC9ADF81E97E9CA006D5F05 /* HomeController.swift in Sources */,
 				9C16E63C1E96A5D600CAD7C9 /* UserProfilePhotoCell.swift in Sources */,
 				9C6092A71E840291004F9C4E /* User.swift in Sources */,
 				9C4E4B401E8E8D0F00AE3A0D /* PhotoSelectorCell.swift in Sources */,
