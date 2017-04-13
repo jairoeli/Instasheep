@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import Firebase
 
 protocol Dao {}
 extension NSObject: Dao {}
@@ -68,4 +69,20 @@ extension UIColor {
     return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
   }
   
+}
+
+extension FIRDatabase {
+  static func fetchUserWith(uid: String, completion: @escaping (User) -> ()) {
+    
+    FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+      guard let userDicitonary = snapshot.value as? [String: Any] else { return }
+      
+      let user = User(uid: uid, dictionary: userDicitonary)
+      completion(user)
+      
+    }) { (err) in
+      print("Failed to fetch user for posts:", err)
+    }
+    
+  }
 }

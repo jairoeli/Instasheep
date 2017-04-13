@@ -28,37 +28,36 @@ class HomeController: UICollectionViewController {
     navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
   }
   
+  // MARK: - Firebase
+  
   fileprivate func fetchPosts() {
     guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
     
-    FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-      guard let userDicitonary = snapshot.value as? [String: Any] else { return }
-      
-      let user = User(dictionary: userDicitonary)
-      
-      let ref = FIRDatabase.database().reference().child("posts").child(uid)
-      ref.observeSingleEvent(of: .value, with: { (snapshot) in
-        
-        guard let dictionaries = snapshot.value as? [String: Any] else { return }
-        
-        dictionaries.forEach({ (key, value) in
-          guard let dictionary = value as? [String: Any] else { return }
-          
-          let post = Post(user: user, dictionary: dictionary)
-//          self.posts.insert(post, at: 0)
-          self.posts.append(post)
-        })
-        
-        self.collectionView?.reloadData()
-        
-      }) { (err) in
-        print("Failed to fetch posts:", err)
-      }
-      
-    }) { (err) in
-      print("Failed to fetch user for posts:", err)
+    FIRDatabase.fetchUserWith(uid: uid) { (user) in
+      self.fetchPostsWith(user: user)
     }
     
+  }
+  
+  fileprivate func fetchPostsWith(user: User) {
+    
+    let ref = FIRDatabase.database().reference().child("posts").child(user.uid)
+    ref.observeSingleEvent(of: .value, with: { (snapshot) in
+      
+      guard let dictionaries = snapshot.value as? [String: Any] else { return }
+      
+      dictionaries.forEach({ (key, value) in
+        guard let dictionary = value as? [String: Any] else { return }
+        
+        let post = Post(user: user, dictionary: dictionary)
+        self.posts.append(post)
+      })
+      
+      self.collectionView?.reloadData()
+      
+    }) { (err) in
+      print("Failed to fetch posts:", err)
+    }
   }
   
   // MARK: - UICollectionView

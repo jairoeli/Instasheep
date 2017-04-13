@@ -56,18 +56,10 @@ class UserProfileController: UICollectionViewController {
   fileprivate func fetchUser() {
     guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
     
-    FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
-      print(snapshot.value ?? "")
-      
-      guard let dictionary = snapshot.value as? [String: Any] else { return }
-
-      self.user = User(dictionary: dictionary)
-      
+    FIRDatabase.fetchUserWith(uid: uid) { (user) in
+      self.user = user
       self.navigationItem.title = self.user?.username
       self.collectionView?.reloadData()
-      
-    }) { (err) in
-      print("Failed to fetch user:", err)
     }
     
   }
