@@ -10,15 +10,23 @@ import UIKit
 
 class UserSearchCell: UICollectionViewCell {
   
+  var user: User? {
+    didSet {
+      usernameLabel.text = user?.username
+      
+      guard let profileImageURL = user?.profileImageURL else { return }
+      profileImageView.loadImage(urlString: profileImageURL)
+    }
+  }
+  
   let profileImageView = CustomImageView {
-    $0.backgroundColor = .red
+    $0.backgroundColor = .lightGray
     $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
     $0.layer.cornerRadius = 50 / 2
   }
   
   let usernameLabel = UILabel {
-    $0.text = "Username"
     $0.font = UIFont.boldSystemFont(ofSize: 14)
   }
   
