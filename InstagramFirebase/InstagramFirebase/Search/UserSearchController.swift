@@ -36,8 +36,14 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
     
     collectionView?.register(UserSearchCell.self, forCellWithReuseIdentifier: cellId)
     collectionView?.alwaysBounceVertical = true
+    collectionView?.keyboardDismissMode = .onDrag
     
     fetchUsers()
+  }
+  
+  override func viewWillAppear(_ animated: Bool) {
+    super.viewWillAppear(animated)
+    searchBar.isHidden = false
   }
   
   fileprivate func fetchUsers() {
@@ -48,6 +54,12 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
       guard let dictionaries = snapshot.value as? [String: Any] else { return }
       
       dictionaries.forEach({ (key, value) in
+        
+        if key == FIRAuth.auth()?.currentUser?.uid {
+          print("Found myself, omit from the list")
+          return
+        }
+        
         guard let userDictionary = value as? [String: Any] else { return }
         
         let user = User(uid: key, dictionary: userDictionary)
@@ -69,10 +81,7 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
   // MARK: - Search bar
   
   func searchBar(_ searchBar: UISearchBar, textDidChange searchText: String) {
-//    self.users = self.users.filter { (user) -> Bool in
-//      return user.username.contains(searchText)
-//    }
-    
+
     if searchText.isEmpty {
       filteredUsers = users
     } else {
@@ -83,6 +92,19 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
   }
   
   // MARK: - Collection View
+  override func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
+    
+    searchBar.isHidden = true
+    searchBar.resignFirstResponder()
+    
+    let user = filteredUsers[indexPath.item]
+    print(user.username)
+    
+    let userProfileController = UserProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+    userProfileController.userID = user.uid
+    navigationController?.pushViewController(userProfileController, animated: true)
+  }
+  
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
     return filteredUsers.count
   }

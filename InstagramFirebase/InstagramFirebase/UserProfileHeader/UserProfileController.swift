@@ -11,29 +11,31 @@ import Firebase
 
 class UserProfileController: UICollectionViewController {
   
+  // MARK: - Properties
+  
   fileprivate let headerID = "headerId"
   fileprivate let cellId = "cellId"
   var user: User?
   var posts = [Post]()
+  var userID: String?
+  
+  // MARK: - View Life Cycle
 
   override func viewDidLoad() {
     super.viewDidLoad()
     
     collectionView?.backgroundColor = .white
-    navigationItem.title = FIRAuth.auth()?.currentUser?.uid
-    
-    fetchUser()
-    
     collectionView?.register(UserProfileHeader.self, forSupplementaryViewOfKind: UICollectionElementKindSectionHeader, withReuseIdentifier: headerID)
     collectionView?.register(UserProfilePhotoCell.self, forCellWithReuseIdentifier: cellId)
     
     setupLogOutButton()
-    fetchOrderedPosts()
+    fetchUser()
+//    fetchOrderedPosts()
   }
   
   // MARK: - Fetch User & Post
   fileprivate func fetchOrderedPosts() {
-    guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+    guard let uid = self.user?.uid else { return }
     let ref = FIRDatabase.database().reference().child("posts").child(uid)
     
     // perhaps later on we'll implement some pagination of data
@@ -54,12 +56,14 @@ class UserProfileController: UICollectionViewController {
   }
   
   fileprivate func fetchUser() {
-    guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+    let uid = userID ?? (FIRAuth.auth()?.currentUser?.uid ?? "")
+    //guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
     
     FIRDatabase.fetchUserWith(uid: uid) { (user) in
       self.user = user
       self.navigationItem.title = self.user?.username
       self.collectionView?.reloadData()
+      self.fetchOrderedPosts()
     }
     
   }

@@ -47,7 +47,6 @@ class UserProfileHeader: UICollectionViewCell {
   }()
   
   let usernameLabel = UILabel {
-    $0.text = "username"
     $0.font = UIFont.boldSystemFont(ofSize: 14)
   }
   
