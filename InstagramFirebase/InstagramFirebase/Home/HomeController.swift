@@ -22,6 +22,7 @@ class HomeController: UICollectionViewController {
     
     setupNavigationItems()
     fetchPosts()
+    fetchFollowingUserIds()
   }
   
   func setupNavigationItems() {
@@ -53,10 +54,31 @@ class HomeController: UICollectionViewController {
         self.posts.append(post)
       })
       
+      self.posts.sort(by: { (p1, p2) -> Bool in
+        return p1.creationDate.compare(p2.creationDate) == .orderedDescending
+      })
+      
       self.collectionView?.reloadData()
       
     }) { (err) in
       print("Failed to fetch posts:", err)
+    }
+  }
+  
+  fileprivate func fetchFollowingUserIds() {
+    guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+    FIRDatabase.database().reference().child("Following").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+      
+      guard let userIdsDictionary = snapshot.value as? [String: Any] else { return }
+      
+      userIdsDictionary.forEach({ (key, value) in
+        FIRDatabase.fetchUserWith(uid: key, completion: { (user) in
+          self.fetchPostsWith(user: user)
+        })
+      })
+      
+    }) { (err) in
+      print("Failed to fetch following user ids: ", err)
     }
   }
   
