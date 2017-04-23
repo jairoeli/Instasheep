@@ -14,22 +14,44 @@ class HomeController: UICollectionViewController {
   private let cellId = "cellId"
   var posts = [Post]()
   
+  // MARK: - View Life Cycle
+  
   override func viewDidLoad() {
     super.viewDidLoad()
+    
+    NotificationCenter.default.addObserver(self, selector: #selector(handleUpdateFeed), name: SharePhotoController.updateFeedNotificationName, object: nil)
     collectionView?.backgroundColor = .white
     
     collectionView?.register(HomePostCell.self, forCellWithReuseIdentifier: cellId)
     
+    let refreshControl = UIRefreshControl()
+    refreshControl.addTarget(self, action: #selector(handleRefresh), for: .valueChanged)
+    collectionView?.refreshControl = refreshControl
+    
     setupNavigationItems()
-    fetchPosts()
-    fetchFollowingUserIds()
+    fetchAllPosts()
   }
   
   func setupNavigationItems() {
     navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
   }
   
+  func handleRefresh() {
+    posts.removeAll()
+    fetchAllPosts()
+  }
+  
+  // MARK: - Notification
+  func handleUpdateFeed() {
+    handleRefresh()
+  }
+  
   // MARK: - Firebase
+  
+  fileprivate func fetchAllPosts() {
+    fetchPosts()
+    fetchFollowingUserIds()
+  }
   
   fileprivate func fetchPosts() {
     guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
@@ -44,6 +66,8 @@ class HomeController: UICollectionViewController {
     
     let ref = FIRDatabase.database().reference().child("posts").child(user.uid)
     ref.observeSingleEvent(of: .value, with: { (snapshot) in
+      
+      self.collectionView?.refreshControl?.endRefreshing()
       
       guard let dictionaries = snapshot.value as? [String: Any] else { return }
       
