@@ -34,6 +34,13 @@ class HomeController: UICollectionViewController {
   
   func setupNavigationItems() {
     navigationItem.titleView = UIImageView(image: #imageLiteral(resourceName: "logo2"))
+    
+    navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "camera3").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleCamera))
+  }
+  
+  func handleCamera() {
+    let cameraController = CameraController()
+    present(cameraController, animated: true, completion: nil)
   }
   
   func handleRefresh() {
