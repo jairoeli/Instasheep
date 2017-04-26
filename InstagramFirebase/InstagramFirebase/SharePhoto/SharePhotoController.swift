@@ -20,17 +20,17 @@ class SharePhotoController: UIViewController {
   
   static let updateFeedNotificationName = NSNotification.Name(rawValue: "UpdateFeed")
   
-  let containerView = UIView {
+  let containerView = UIView() <== {
     $0.backgroundColor = .white
   }
   
-  let imageView = UIImageView {
+  let imageView = UIImageView() <== {
     $0.backgroundColor = .red
     $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
   }
   
-  let textView = UITextView {
+  let textView = UITextView() <== {
     $0.font = UIFont.systemFont(ofSize: 14)
   }
   

@@ -13,68 +13,59 @@ class LoginController: UIViewController {
   
   // MARK: - Properties
   
-  let logoContainerView = UIView {
+  let logoContainerView = UIView() <== {
     $0.backgroundColor = UIColor.rgb(red: 0, green: 120, blue: 175)
   }
   
-  let logoImageView = UIImageView {
+  let logoImageView = UIImageView() <== {
     $0.image = #imageLiteral(resourceName: "Instagram_logo_white")
     $0.contentMode = .scaleAspectFill
   }
   
-  lazy var emailTextField: UITextField = {
-    let tf = UITextField()
-    tf.placeholder = "Email"
-    tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
-    tf.borderStyle = .roundedRect
-    tf.font = UIFont.systemFont(ofSize: 14)
-    tf.keyboardType = .emailAddress
-    tf.autocapitalizationType = .none
-    tf.autocorrectionType = .no
-    tf.returnKeyType = .next
-    tf.clearButtonMode = .whileEditing
-    tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
-    return tf
-  }()
+  lazy var emailTextField = UITextField() <== {
+    $0.placeholder = "Email"
+    $0.backgroundColor = UIColor(white: 0, alpha: 0.03)
+    $0.borderStyle = .roundedRect
+    $0.font = UIFont.systemFont(ofSize: 14)
+    $0.keyboardType = .emailAddress
+    $0.autocapitalizationType = .none
+    $0.autocorrectionType = .no
+    $0.returnKeyType = .next
+    $0.clearButtonMode = .whileEditing
+    $0.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+  }
   
-  lazy var passwordTextField: UITextField = {
-    let tf = UITextField()
-    tf.placeholder = "Password"
-    tf.isSecureTextEntry = true
-    tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
-    tf.borderStyle = .roundedRect
-    tf.font = UIFont.systemFont(ofSize: 14)
-    tf.autocapitalizationType = .none
-    tf.autocorrectionType = .no
-    tf.returnKeyType = .done
-    tf.clearButtonMode = .whileEditing
-    tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
-    return tf
-  }()
+  lazy var passwordTextField = UITextField() <== {
+    $0.placeholder = "Password"
+    $0.isSecureTextEntry = true
+    $0.backgroundColor = UIColor(white: 0, alpha: 0.03)
+    $0.borderStyle = .roundedRect
+    $0.font = UIFont.systemFont(ofSize: 14)
+    $0.autocapitalizationType = .none
+    $0.autocorrectionType = .no
+    $0.returnKeyType = .done
+    $0.clearButtonMode = .whileEditing
+    $0.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+  }
   
-  lazy var loginButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setTitle("Login", for: .normal)
-    button.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
-    button.layer.cornerRadius = 5
-    button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-    button.setTitleColor(.white, for: .normal)
-    button.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
-    button.isEnabled = false
-    return button
-  }()
+  lazy var loginButton = UIButton(type: .system) <== {
+    $0.setTitle("Login", for: .normal)
+    $0.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+    $0.layer.cornerRadius = 5
+    $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+    $0.setTitleColor(.white, for: .normal)
+    $0.addTarget(self, action: #selector(handleLogin), for: .touchUpInside)
+    $0.isEnabled = false
+  }
   
-  lazy var dontHaveAccountButton: UIButton = {
-    let button = UIButton(type: .system)
-    
+  lazy var dontHaveAccountButton = UIButton(type: .system) <== {
     let attributedTitle = NSMutableAttributedString(string: "Don't have an account?  ", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.lightGray])
     
     attributedTitle.append(NSAttributedString(string: "Sign Up", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.rgb(red: 17, green: 154, blue: 237)]))
     
-    button.setAttributedTitle(attributedTitle, for: .normal)
-    button.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
-    return button
-  }()
+    $0.setAttributedTitle(attributedTitle, for: .normal)
+    $0.addTarget(self, action: #selector(handleShowSignUp), for: .touchUpInside)
+  }
   
   // MARK: - Lifecycle
   override func viewDidLoad() {

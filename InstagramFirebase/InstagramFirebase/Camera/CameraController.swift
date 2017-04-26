@@ -11,19 +11,15 @@ import AVFoundation
 
 class CameraController: UIViewController {
   
-  lazy var dismissButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setImage(#imageLiteral(resourceName: "right_arrow_shadow"), for: .normal)
-    button.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
-    return button
-  }()
+  lazy var dismissButton = UIButton(type: .system) <== {
+    $0.setImage(#imageLiteral(resourceName: "right_arrow_shadow"), for: .normal)
+    $0.addTarget(self, action: #selector(handleDismiss), for: .touchUpInside)
+  }
   
-  lazy var capturePhotoButton: UIButton =  {
-    let button = UIButton(type: .system)
-    button.setImage(#imageLiteral(resourceName: "capture_photo"), for: .normal)
-    button.addTarget(self, action: #selector(handleCapturePhoto), for: .touchUpInside)
-    return button
-  }()
+  lazy var capturePhotoButton = UIButton(type: .system) <== {
+    $0.setImage(#imageLiteral(resourceName: "capture_photo"), for: .normal)
+    $0.addTarget(self, action: #selector(handleCapturePhoto), for: .touchUpInside)
+  }
   
   override func viewDidLoad() {
     super.viewDidLoad()

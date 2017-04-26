@@ -20,7 +20,7 @@ class UserProfilePhotoCell: UICollectionViewCell {
     }
   }
   
-  let photoImageView = CustomImageView {
+  let photoImageView = CustomImageView() <== {
     $0.backgroundColor = .lightGray
     $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true

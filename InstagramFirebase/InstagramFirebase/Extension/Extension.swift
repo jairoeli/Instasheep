@@ -10,25 +10,12 @@ import Foundation
 import UIKit
 import Firebase
 
-protocol Dao {}
-extension NSObject: Dao {}
+infix operator <==
 
-extension Dao where Self: NSObject {
-  
-  init(closure: (Self) -> Void) {
-    self.init()
-    closure(self)
-  }
-  
-}
-
-extension Dao where Self: UIButton {
-  
-  init(type: UIButtonType, closure: (Self) -> Void) {
-    self = UIButton(type: type) as! Self
-    closure(self)
-  }
-  
+@discardableResult
+public func <== <T>(x: T, f: (T) -> ()) -> T {
+  f(x)
+  return x
 }
 
 extension UIView {

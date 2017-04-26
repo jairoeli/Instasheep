@@ -24,55 +24,45 @@ class HomePostCell: UICollectionViewCell {
     }
   }
   
-  let userProfileImageView = CustomImageView {
+  let userProfileImageView = CustomImageView() <== {
     $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
     $0.layer.cornerRadius = 40 / 2
   }
   
-  let photoImageView = CustomImageView {
+  let photoImageView = CustomImageView() <== {
     $0.backgroundColor = .white
     $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
   }
   
-  let usernameLabel = UILabel {
+  let usernameLabel = UILabel() <== {
     $0.text = "Username"
     $0.font = UIFont.boldSystemFont(ofSize: 14)
   }
   
-  lazy var optionsButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setTitle("•••", for: .normal)
-    button.setTitleColor(.black, for: .normal)
-    return button
-  }()
+  lazy var optionsButton = UIButton(type: .system) <== {
+    $0.setTitle("•••", for: .normal)
+    $0.setTitleColor(.black, for: .normal)
+  }
   
-  lazy var commentButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(.alwaysOriginal), for: .normal)
-    return button
-  }()
+  lazy var commentButton = UIButton(type: .system) <== {
+    $0.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(.alwaysOriginal), for: .normal)
+  }
   
-  lazy var likeButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setImage(#imageLiteral(resourceName: "like_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
-    return button
-  }()
+  lazy var likeButton = UIButton(type: .system) <== {
+    $0.setImage(#imageLiteral(resourceName: "like_unselected").withRenderingMode(.alwaysOriginal), for: .normal)
+  }
   
-  lazy var sendMessageButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
-    return button
-  }()
+  lazy var sendMessageButton = UIButton(type: .system) <== {
+    $0.setImage(#imageLiteral(resourceName: "send2").withRenderingMode(.alwaysOriginal), for: .normal)
+  }
   
-  lazy var bookmarkButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setImage(#imageLiteral(resourceName: "ribbon").withRenderingMode(.alwaysOriginal), for: .normal)
-    return button
-  }()
+  lazy var bookmarkButton = UIButton(type: .system) <== {
+    $0.setImage(#imageLiteral(resourceName: "ribbon").withRenderingMode(.alwaysOriginal), for: .normal)
+  }
   
-  let captionLabel = UILabel {
+  let captionLabel = UILabel() <== {
     $0.numberOfLines = 0
   }
   

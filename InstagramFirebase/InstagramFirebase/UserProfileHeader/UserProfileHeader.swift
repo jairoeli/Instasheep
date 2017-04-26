@@ -21,36 +21,30 @@ class UserProfileHeader: UICollectionViewCell {
   }
   
   // MARK: - Properties
-  let profileImageView = CustomImageView {
+  let profileImageView = CustomImageView() <== {
     $0.layer.cornerRadius = 80 / 2
     $0.clipsToBounds = true
   }
   
-  lazy var gridButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
-    return button
-  }()
+  lazy var gridButton = UIButton(type: .system) <== {
+    $0.setImage(#imageLiteral(resourceName: "grid"), for: .normal)
+  }
   
-  lazy var listButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setImage(#imageLiteral(resourceName: "list"), for: .normal)
-    button.tintColor = UIColor(white: 0, alpha: 0.2)
-    return button
-  }()
+  lazy var listButton = UIButton(type: .system) <== {
+    $0.setImage(#imageLiteral(resourceName: "list"), for: .normal)
+    $0.tintColor = UIColor(white: 0, alpha: 0.2)
+  }
   
-  lazy var bookmarkButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setImage(#imageLiteral(resourceName: "ribbon"), for: .normal)
-    button.tintColor = UIColor(white: 0, alpha: 0.2)
-    return button
-  }()
+  lazy var bookmarkButton = UIButton(type: .system) <== {
+    $0.setImage(#imageLiteral(resourceName: "ribbon"), for: .normal)
+    $0.tintColor = UIColor(white: 0, alpha: 0.2)
+  }
   
-  let usernameLabel = UILabel {
+  let usernameLabel = UILabel() <== {
     $0.font = UIFont.boldSystemFont(ofSize: 14)
   }
   
-  let postsLabel = UILabel {
+  let postsLabel = UILabel() <== {
     let attributedText = NSMutableAttributedString(string: "11\n", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)])
     attributedText.append(NSAttributedString(string: "posts", attributes: [NSForegroundColorAttributeName: UIColor.lightGray, NSFontAttributeName: UIFont.systemFont(ofSize: 14)]))
     $0.attributedText = attributedText
@@ -58,7 +52,7 @@ class UserProfileHeader: UICollectionViewCell {
     $0.numberOfLines = 0
   }
   
-  let followersLabel = UILabel {
+  let followersLabel = UILabel() <== {
     let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)])
     attributedText.append(NSAttributedString(string: "followers", attributes: [NSForegroundColorAttributeName: UIColor.lightGray, NSFontAttributeName: UIFont.systemFont(ofSize: 14)]))
     $0.attributedText = attributedText
@@ -66,7 +60,7 @@ class UserProfileHeader: UICollectionViewCell {
     $0.numberOfLines = 0
   }
   
-  let followingLabel = UILabel {
+  let followingLabel = UILabel() <== {
     let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)])
     attributedText.append(NSAttributedString(string: "following", attributes: [NSForegroundColorAttributeName: UIColor.lightGray,
                                                                                NSFontAttributeName: UIFont.systemFont(ofSize: 14)]))
@@ -75,17 +69,15 @@ class UserProfileHeader: UICollectionViewCell {
     $0.numberOfLines = 0
   }
   
-  lazy var editProfileFollowButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setTitle("Edit Profile", for: .normal)
-    button.setTitleColor(.black, for: .normal)
-    button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-    button.layer.borderColor = UIColor.lightGray.cgColor
-    button.layer.borderWidth = 1
-    button.layer.cornerRadius = 3
-    button.addTarget(self, action: #selector(handleEditProfileOrFollow), for: .touchUpInside)
-    return button
-  }()
+  lazy var editProfileFollowButton = UIButton(type: .system) <== {
+    $0.setTitle("Edit Profile", for: .normal)
+    $0.setTitleColor(.black, for: .normal)
+    $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+    $0.layer.borderColor = UIColor.lightGray.cgColor
+    $0.layer.borderWidth = 1
+    $0.layer.cornerRadius = 3
+    $0.addTarget(self, action: #selector(handleEditProfileOrFollow), for: .touchUpInside)
+  }
   
   // MARK: - Initializing
   override init(frame: CGRect) {

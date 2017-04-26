@@ -13,80 +13,67 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
   
   // MARK: - Properties
   
-  lazy var plusPhotoButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setImage(#imageLiteral(resourceName: "plus_photo").withRenderingMode(.alwaysOriginal), for: .normal)
-    button.addTarget(self, action: #selector(handlePlusPhoto), for: .touchUpInside)
-    return button
-  }()
+  lazy var plusPhotoButton = UIButton(type: .system) <== {
+    $0.setImage(#imageLiteral(resourceName: "plus_photo").withRenderingMode(.alwaysOriginal), for: .normal)
+    $0.addTarget(self, action: #selector(handlePlusPhoto), for: .touchUpInside)
+  }
   
-  lazy var emailTextField: UITextField = {
-    let tf = UITextField()
-    tf.placeholder = "Email"
-    tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
-    tf.borderStyle = .roundedRect
-    tf.font = UIFont.systemFont(ofSize: 14)
-    tf.keyboardType = .emailAddress
-    tf.autocapitalizationType = .none
-    tf.autocorrectionType = .no
-    tf.returnKeyType = .next
-    tf.clearButtonMode = .whileEditing
-    tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
-    return tf
-  }()
+  lazy var emailTextField = UITextField() <== {
+    $0.placeholder = "Email"
+    $0.backgroundColor = UIColor(white: 0, alpha: 0.03)
+    $0.borderStyle = .roundedRect
+    $0.font = UIFont.systemFont(ofSize: 14)
+    $0.keyboardType = .emailAddress
+    $0.autocapitalizationType = .none
+    $0.autocorrectionType = .no
+    $0.returnKeyType = .next
+    $0.clearButtonMode = .whileEditing
+    $0.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+  }
   
-  lazy var usernameTextField: UITextField = {
-    let tf = UITextField()
-    tf.placeholder = "Username"
-    tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
-    tf.borderStyle = .roundedRect
-    tf.font = UIFont.systemFont(ofSize: 14)
-    tf.autocapitalizationType = .none
-    tf.autocorrectionType = .no
-    tf.returnKeyType = .next
-    tf.clearButtonMode = .whileEditing
-    tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
-    return tf
-  }()
+  lazy var usernameTextField = UITextField() <== {
+    $0.placeholder = "Username"
+    $0.backgroundColor = UIColor(white: 0, alpha: 0.03)
+    $0.borderStyle = .roundedRect
+    $0.font = UIFont.systemFont(ofSize: 14)
+    $0.autocapitalizationType = .none
+    $0.autocorrectionType = .no
+    $0.returnKeyType = .next
+    $0.clearButtonMode = .whileEditing
+    $0.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+  }
   
-  lazy var passwordTextField: UITextField = {
-    let tf = UITextField()
-    tf.placeholder = "Password"
-    tf.isSecureTextEntry = true
-    tf.backgroundColor = UIColor(white: 0, alpha: 0.03)
-    tf.borderStyle = .roundedRect
-    tf.font = UIFont.systemFont(ofSize: 14)
-    tf.autocapitalizationType = .none
-    tf.autocorrectionType = .no
-    tf.returnKeyType = .done
-    tf.clearButtonMode = .whileEditing
-    tf.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
-    return tf
-  }()
+  lazy var passwordTextField = UITextField() <== {
+    $0.placeholder = "Password"
+    $0.isSecureTextEntry = true
+    $0.backgroundColor = UIColor(white: 0, alpha: 0.03)
+    $0.borderStyle = .roundedRect
+    $0.font = UIFont.systemFont(ofSize: 14)
+    $0.autocapitalizationType = .none
+    $0.autocorrectionType = .no
+    $0.returnKeyType = .done
+    $0.clearButtonMode = .whileEditing
+    $0.addTarget(self, action: #selector(handleTextInputChange), for: .editingChanged)
+  }
   
-  lazy var signUpButton: UIButton = {
-    let button = UIButton(type: .system)
-    button.setTitle("Sign Up", for: .normal)
-    button.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
-    button.layer.cornerRadius = 5
-    button.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
-    button.setTitleColor(.white, for: .normal)
-    button.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
-    button.isEnabled = false
-    return button
-  }()
+  lazy var signUpButton = UIButton(type: .system) <== {
+    $0.setTitle("Sign Up", for: .normal)
+    $0.backgroundColor = UIColor.rgb(red: 149, green: 204, blue: 244)
+    $0.layer.cornerRadius = 5
+    $0.titleLabel?.font = UIFont.boldSystemFont(ofSize: 14)
+    $0.setTitleColor(.white, for: .normal)
+    $0.addTarget(self, action: #selector(handleSignUp), for: .touchUpInside)
+    $0.isEnabled = false
+  }
   
-  lazy var alreadyHaveAccountButton: UIButton = {
-    let button = UIButton(type: .system)
-    
+  lazy var alreadyHaveAccountButton = UIButton(type: .system) <== {
     let attributedTitle = NSMutableAttributedString(string: "Already have an account?  ", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.lightGray])
     
     attributedTitle.append(NSAttributedString(string: "Sign In", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.rgb(red: 17, green: 154, blue: 237)]))
     
-    button.setAttributedTitle(attributedTitle, for: .normal)
-    button.addTarget(self, action: #selector(handleAlreadyHaveAccount), for: .touchUpInside)
-    return button
-  }()
+    $0.setAttributedTitle(attributedTitle, for: .normal)
+    $0.addTarget(self, action: #selector(handleAlreadyHaveAccount), for: .touchUpInside)
+  }
   
   // MARK: - Lifecycle
   override func viewDidLoad() {

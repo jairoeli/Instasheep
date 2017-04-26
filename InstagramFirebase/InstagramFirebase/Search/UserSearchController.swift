@@ -17,7 +17,7 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
   var users = [User]()
   var filteredUsers = [User]()
   
-  lazy var searchBar = UISearchBar {
+  lazy var searchBar = UISearchBar() <== {
     $0.placeholder = "Enter username"
     $0.barTintColor = .gray
     UITextField.appearance(whenContainedInInstancesOf: [UISearchBar.self]).backgroundColor = UIColor.rgb(red: 230, green: 230, blue: 230)

@@ -19,18 +19,18 @@ class UserSearchCell: UICollectionViewCell {
     }
   }
   
-  let profileImageView = CustomImageView {
+  let profileImageView = CustomImageView() <== {
     $0.backgroundColor = .lightGray
     $0.contentMode = .scaleAspectFill
     $0.clipsToBounds = true
     $0.layer.cornerRadius = 50 / 2
   }
   
-  let usernameLabel = UILabel {
+  let usernameLabel = UILabel() <== {
     $0.font = UIFont.boldSystemFont(ofSize: 14)
   }
   
-  let separatorView = UIView() {
+  let separatorView = UIView() <== {
     $0.backgroundColor = UIColor(white: 0, alpha: 0.5)
   }
   
