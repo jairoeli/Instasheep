@@ -33,6 +33,8 @@
 		9CCDE82D1E9006BF00BD67F8 /* PhotoSelectorHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCDE82C1E9006BF00BD67F8 /* PhotoSelectorHeader.swift */; };
 		9CDFECE91E914EFD0019A94D /* SharePhotoController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CDFECE81E914EFD0019A94D /* SharePhotoController.swift */; };
 		9CEA01851E833F78004F5BEB /* MainTabBarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CEA01841E833F78004F5BEB /* MainTabBarController.swift */; };
+		9CFEEB8A1EB588C6009C0DE9 /* CustomAnimation.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFEEB891EB588C6009C0DE9 /* CustomAnimation.swift */; };
+		9CFEEB8C1EB58CAE009C0DE9 /* CustomAnimationDismisser.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CFEEB8B1EB58CAE009C0DE9 /* CustomAnimationDismisser.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -65,6 +67,8 @@
 		9CCDE82C1E9006BF00BD67F8 /* PhotoSelectorHeader.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PhotoSelectorHeader.swift; path = AddPhoto/PhotoSelectorHeader.swift; sourceTree = "<group>"; };
 		9CDFECE81E914EFD0019A94D /* SharePhotoController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = SharePhotoController.swift; path = SharePhoto/SharePhotoController.swift; sourceTree = "<group>"; };
 		9CEA01841E833F78004F5BEB /* MainTabBarController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = MainTabBarController.swift; path = Controller/MainTabBarController.swift; sourceTree = "<group>"; };
+		9CFEEB891EB588C6009C0DE9 /* CustomAnimation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomAnimation.swift; path = Camera/CustomAnimation.swift; sourceTree = "<group>"; };
+		9CFEEB8B1EB58CAE009C0DE9 /* CustomAnimationDismisser.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomAnimationDismisser.swift; path = Camera/CustomAnimationDismisser.swift; sourceTree = "<group>"; };
 		C0389019075D4853A9FA6E7D /* Pods-InstagramFirebase.release.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramFirebase.release.xcconfig"; path = "Pods/Target Support Files/Pods-InstagramFirebase/Pods-InstagramFirebase.release.xcconfig"; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
@@ -189,6 +193,8 @@
 			children = (
 				9CAF88121EB00EF50049536D /* CameraController.swift */,
 				9C04A7A61EB240A700386604 /* PreviewPhotoContainerView.swift */,
+				9CFEEB891EB588C6009C0DE9 /* CustomAnimation.swift */,
+				9CFEEB8B1EB58CAE009C0DE9 /* CustomAnimationDismisser.swift */,
 			);
 			name = Camera;
 			sourceTree = "<group>";
@@ -372,11 +378,13 @@
 				9C16E63A1E96A2D100CAD7C9 /* Post.swift in Sources */,
 				9C6092A31E83F859004F9C4E /* UserProfileHeader.swift in Sources */,
 				9C6092A51E83FF9E004F9C4E /* UserProfileController.swift in Sources */,
+				9CFEEB8A1EB588C6009C0DE9 /* CustomAnimation.swift in Sources */,
 				9CDFECE91E914EFD0019A94D /* SharePhotoController.swift in Sources */,
 				9CCDE82D1E9006BF00BD67F8 /* PhotoSelectorHeader.swift in Sources */,
 				9CCD45201E8654E600AAB7C9 /* LoginController.swift in Sources */,
 				9C5DCC3C1E81857B0048C03A /* AppDelegate.swift in Sources */,
 				9CAF88131EB00EF50049536D /* CameraController.swift in Sources */,
+				9CFEEB8C1EB58CAE009C0DE9 /* CustomAnimationDismisser.swift in Sources */,
 				9CC9ADF81E97E9CA006D5F05 /* HomeController.swift in Sources */,
 				9C16E63C1E96A5D600CAD7C9 /* UserProfilePhotoCell.swift in Sources */,
 				9C6092A71E840291004F9C4E /* User.swift in Sources */,
