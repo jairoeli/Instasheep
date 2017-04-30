@@ -8,7 +8,13 @@
 
 import UIKit
 
+protocol HomePostCellDelegate: class {
+  func didTapComment(post: Post)
+}
+
 class HomePostCell: UICollectionViewCell {
+  
+  weak var delegate: HomePostCellDelegate?
   
   var post: Post? {
     didSet {
@@ -23,6 +29,8 @@ class HomePostCell: UICollectionViewCell {
       setupAttributedCaption()
     }
   }
+  
+  // MARK: - Properties
   
   let userProfileImageView = CustomImageView() <== {
     $0.contentMode = .scaleAspectFill
@@ -48,6 +56,7 @@ class HomePostCell: UICollectionViewCell {
   
   lazy var commentButton = UIButton(type: .system) <== {
     $0.setImage(#imageLiteral(resourceName: "comment").withRenderingMode(.alwaysOriginal), for: .normal)
+    $0.addTarget(self, action: #selector(handleComment), for: .touchUpInside)
   }
   
   lazy var likeButton = UIButton(type: .system) <== {
@@ -84,7 +93,16 @@ class HomePostCell: UICollectionViewCell {
     setupLayout()
   }
   
+  // MARK: - Handle comment
+  
+  func handleComment() {
+    guard let post = self.post else { return }
+    delegate?.didTapComment(post: post)
+  }
+  
 }
+
+// MARK: - Layout
 
 extension HomePostCell {
   

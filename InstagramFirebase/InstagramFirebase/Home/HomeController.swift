@@ -9,7 +9,7 @@
 import UIKit
 import Firebase
 
-class HomeController: UICollectionViewController {
+class HomeController: UICollectionViewController, HomePostCellDelegate {
   
   private let cellId = "cellId"
   var posts = [Post]()
@@ -113,6 +113,14 @@ class HomeController: UICollectionViewController {
     }
   }
   
+  // MARK: - Delegate
+  
+  func didTapComment(post: Post) {
+    print(post.caption)
+    let commentsController = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
+    navigationController?.pushViewController(commentsController, animated: true)
+  }
+  
   // MARK: - UICollectionView
   
   override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
@@ -123,6 +131,8 @@ class HomeController: UICollectionViewController {
     guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? HomePostCell else { return UICollectionViewCell() }
     
     cell.post = posts[indexPath.item]
+    cell.delegate = self
+    
     return cell
   }
   
