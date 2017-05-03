@@ -7,10 +7,13 @@
 //
 
 import UIKit
+import Firebase
 
 class CommentsController: UICollectionViewController {
 
   // MARK: - Properties
+
+  var post: Post?
 
   lazy var containerView = UIView() <== {
     $0.backgroundColor = .white
@@ -24,7 +27,7 @@ class CommentsController: UICollectionViewController {
     $0.addTarget(self, action: #selector(handleSubmit), for: .touchUpInside)
   }
 
-  lazy var textField = UITextField() <== {
+  lazy var commentTextField = UITextField() <== {
     $0.placeholder = "Enter Comment"
   }
 
@@ -53,8 +56,8 @@ class CommentsController: UICollectionViewController {
       containerView.addSubview(submitButton)
       submitButton.anchor(top: containerView.topAnchor, left: nil, bottom: containerView.bottomAnchor, right: containerView.rightAnchor, paddingTop: 0, paddingLeft: 0, paddingBottom: 0, paddingRight: 12, width: 50, height: 0)
 
-      containerView.addSubview(textField)
-      textField.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: submitButton.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
+      containerView.addSubview(commentTextField)
+      commentTextField.anchor(top: containerView.topAnchor, left: containerView.leftAnchor, bottom: containerView.bottomAnchor, right: submitButton.leftAnchor, paddingTop: 0, paddingLeft: 12, paddingBottom: 0, paddingRight: 0, width: 0, height: 0)
 
       return containerView
     }
@@ -67,7 +70,22 @@ class CommentsController: UICollectionViewController {
   // MARK: - Handle Submit
 
   func handleSubmit() {
-    print("Handling submit...")
+    guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+
+    print("post id:", self.post?.id ?? "")
+    print("Inserting comment:", commentTextField.text ?? "")
+
+    let postID = self.post?.id ?? ""
+    let values = ["text": commentTextField.text ?? "", "creationDate": Date().timeIntervalSince1970, "uid": uid] as [String: Any]
+
+    FIRDatabase.database().reference().child("comments").child(postID).childByAutoId().updateChildValues(values) { (err, ref) in
+
+      if let err = err {
+        print("Failed to insert comment:", err)
+      }
+
+      print("Successfully inserted comment")
+    }
   }
   
 }
