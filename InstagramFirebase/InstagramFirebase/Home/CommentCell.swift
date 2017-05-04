@@ -27,7 +27,7 @@ class CommentCell: UICollectionViewCell {
     addSubview(textLabel)
     setupLayout()
   }
-  
+
   required init?(coder aDecoder: NSCoder) {
     fatalError("init(coder:) has not been implemented")
   }
@@ -35,6 +35,5 @@ class CommentCell: UICollectionViewCell {
   fileprivate func setupLayout() {
     textLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 4, paddingBottom: 4, paddingRight: 4, width: 0, height: 0)
   }
-
 
 }

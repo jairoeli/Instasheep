@@ -13,80 +13,80 @@ import Firebase
 infix operator <==
 
 @discardableResult
-public func <== <T>(x: T, f: (T) -> ()) -> T {
+public func <== <T>(x: T, f: (T) -> Void) -> T {
   f(x)
   return x
 }
 
 extension UIView {
-  func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?,  paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
-    
+  func anchor(top: NSLayoutYAxisAnchor?, left: NSLayoutXAxisAnchor?, bottom: NSLayoutYAxisAnchor?, right: NSLayoutXAxisAnchor?, paddingTop: CGFloat, paddingLeft: CGFloat, paddingBottom: CGFloat, paddingRight: CGFloat, width: CGFloat, height: CGFloat) {
+
     translatesAutoresizingMaskIntoConstraints = false
-    
+
     if let top = top {
       self.topAnchor.constraint(equalTo: top, constant: paddingTop).isActive = true
     }
-    
+
     if let left = left {
       self.leftAnchor.constraint(equalTo: left, constant: paddingLeft).isActive = true
     }
-    
+
     if let bottom = bottom {
       bottomAnchor.constraint(equalTo: bottom, constant: -paddingBottom).isActive = true
     }
-    
+
     if let right = right {
       rightAnchor.constraint(equalTo: right, constant: -paddingRight).isActive = true
     }
-    
+
     if width != 0 {
       widthAnchor.constraint(equalToConstant: width).isActive = true
     }
-    
+
     if height != 0 {
       heightAnchor.constraint(equalToConstant: height).isActive = true
     }
   }
-  
+
 }
 
 extension UIColor {
-  
+
   static func rgb(red: CGFloat, green: CGFloat, blue: CGFloat) -> UIColor {
     return UIColor(red: red/255, green: green/255, blue: blue/255, alpha: 1)
   }
-  
+
 }
 
 extension FIRDatabase {
-  static func fetchUserWith(uid: String, completion: @escaping (User) -> ()) {
-    
+  static func fetchUserWith(uid: String, completion: @escaping (User) -> Void) {
+
     FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
       guard let userDicitonary = snapshot.value as? [String: Any] else { return }
-      
+
       let user = User(uid: uid, dictionary: userDicitonary)
       completion(user)
-      
+
     }) { (err) in
       print("Failed to fetch user for posts:", err)
     }
-    
+
   }
 }
 
 extension Date {
   func timeAgoDisplay() -> String {
     let secondsAgo = Int(Date().timeIntervalSince(self))
-    
+
     let minute = 60
     let hour = 60 * minute
     let day = 24 * hour
     let week = 7 * day
     let month = 4 * week
-    
+
     let quotient: Int
     let unit: String
-    
+
     if secondsAgo < minute {
       quotient = secondsAgo
       unit = "second"
@@ -106,33 +106,7 @@ extension Date {
       quotient = secondsAgo / month
       unit = "month"
     }
-    
+
     return "\(quotient) \(unit)\(quotient == 1 ? "" : "s") ago"
   }
 }
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-

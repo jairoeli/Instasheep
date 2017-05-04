@@ -264,6 +264,7 @@
 				9C5DCC361E81857B0048C03A /* Resources */,
 				A23BFEEE6F48A4CDD831834C /* [CP] Embed Pods Frameworks */,
 				4861AE44DE8454B9EF5F60F9 /* [CP] Copy Pods Resources */,
+				9CB766731EBB60EC006CDBFD /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -338,6 +339,20 @@
 			shellPath = /bin/sh;
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InstagramFirebase/Pods-InstagramFirebase-resources.sh\"\n";
 			showEnvVarsInLog = 0;
+		};
+		9CB766731EBB60EC006CDBFD /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
 		};
 		A23BFEEE6F48A4CDD831834C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;

@@ -34,7 +34,7 @@ class CommentsController: UICollectionViewController {
   }
 
   // MARK: - View Life Cycle
-  
+
   override func viewDidLoad() {
     super.viewDidLoad()
 
@@ -42,7 +42,7 @@ class CommentsController: UICollectionViewController {
 
     collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -50, right: 0)
     collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -50, right: 0)
-    
+
     collectionView?.backgroundColor = .red
     collectionView?.register(CommentCell.self, forCellWithReuseIdentifier: cellID)
 
@@ -89,7 +89,7 @@ class CommentsController: UICollectionViewController {
       self.comments.append(comment)
       self.collectionView?.reloadData()
 
-    }) { (err) in
+    }) { (_) in
       print("Failed to observe comments")
     }
   }
@@ -105,7 +105,7 @@ class CommentsController: UICollectionViewController {
     let postID = self.post?.id ?? ""
     let values = ["text": commentTextField.text ?? "", "creationDate": Date().timeIntervalSince1970, "uid": uid] as [String: Any]
 
-    FIRDatabase.database().reference().child("comments").child(postID).childByAutoId().updateChildValues(values) { (err, ref) in
+    FIRDatabase.database().reference().child("comments").child(postID).childByAutoId().updateChildValues(values) { (err, _) in
 
       if let err = err {
         print("Failed to insert comment:", err)
@@ -114,7 +114,7 @@ class CommentsController: UICollectionViewController {
       print("Successfully inserted comment")
     }
   }
-  
+
 }
 
 extension CommentsController: UICollectionViewDelegateFlowLayout {
