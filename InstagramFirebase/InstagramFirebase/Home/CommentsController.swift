@@ -14,6 +14,8 @@ class CommentsController: UICollectionViewController {
   // MARK: - Properties
 
   var post: Post?
+  let cellID = "cellId"
+  var comments = [Comment]()
 
   lazy var containerView = UIView() <== {
     $0.backgroundColor = .white
@@ -37,8 +39,14 @@ class CommentsController: UICollectionViewController {
     super.viewDidLoad()
 
     navigationItem.title = "Comments"
+
+    collectionView?.contentInset = UIEdgeInsets(top: 0, left: 0, bottom: -50, right: 0)
+    collectionView?.scrollIndicatorInsets = UIEdgeInsets(top: 0, left: 0, bottom: -50, right: 0)
     
     collectionView?.backgroundColor = .red
+    collectionView?.register(CommentCell.self, forCellWithReuseIdentifier: cellID)
+
+    fetchComments()
   }
 
   override func viewWillAppear(_ animated: Bool) {
@@ -67,6 +75,25 @@ class CommentsController: UICollectionViewController {
     return true
   }
 
+  // MARK: - Fetch comments
+  fileprivate func fetchComments() {
+    guard let postID = self.post?.id else { return }
+    let ref = FIRDatabase.database().reference().child("comments").child(postID)
+
+    ref.observe(.childAdded, with: { (snapshot) in
+
+      guard let dictionary = snapshot.value as? [String: Any] else { return }
+
+      let comment = Comment(dictionary: dictionary)
+//      print(comment.text, comment.uid)
+      self.comments.append(comment)
+      self.collectionView?.reloadData()
+
+    }) { (err) in
+      print("Failed to observe comments")
+    }
+  }
+
   // MARK: - Handle Submit
 
   func handleSubmit() {
@@ -88,4 +115,24 @@ class CommentsController: UICollectionViewController {
     }
   }
   
+}
+
+extension CommentsController: UICollectionViewDelegateFlowLayout {
+
+  override func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    return comments.count
+  }
+
+  override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+    guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellID, for: indexPath) as? CommentCell else { return UICollectionViewCell() }
+
+    cell.comment = self.comments[indexPath.item]
+
+    return cell
+  }
+
+  func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+    return CGSize(width: view.frame.width, height: 50)
+  }
+
 }

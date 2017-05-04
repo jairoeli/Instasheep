@@ -119,7 +119,7 @@ class HomeController: UICollectionViewController, HomePostCellDelegate {
   func didTapComment(post: Post) {
     print(post.caption)
     let commentsController = CommentsController(collectionViewLayout: UICollectionViewFlowLayout())
-    commentsController.post = post
+    commentsController.post = post 
     navigationController?.pushViewController(commentsController, animated: true)
   }
   
