@@ -2,6 +2,9 @@ rvm: 2.0.0
 language: objective-c
 osx_image: xcode8.3
 
+xcode_project: InstagramFirebase.xcodeproj
+xcode_scheme: InstagramFirebase
+
 before_script:
 - bundle exec danger
 script:
