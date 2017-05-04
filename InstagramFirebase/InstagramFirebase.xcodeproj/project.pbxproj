@@ -9,6 +9,7 @@
 /* Begin PBXBuildFile section */
 		18A3B5D0DDB755E0BD53FD0C /* Pods_InstagramFirebase.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 460C04DBBC87D195488F1A10 /* Pods_InstagramFirebase.framework */; };
 		9C04A7A71EB240A700386604 /* PreviewPhotoContainerView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C04A7A61EB240A700386604 /* PreviewPhotoContainerView.swift */; };
+		9C0EF0D61EB6466600B4BCE6 /* CommentsController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C0EF0D51EB6466600B4BCE6 /* CommentsController.swift */; };
 		9C16E63A1E96A2D100CAD7C9 /* Post.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C16E6391E96A2D100CAD7C9 /* Post.swift */; };
 		9C16E63C1E96A5D600CAD7C9 /* UserProfilePhotoCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C16E63B1E96A5D600CAD7C9 /* UserProfilePhotoCell.swift */; };
 		9C16E63E1E96ACB700CAD7C9 /* CustomImageView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C16E63D1E96ACB700CAD7C9 /* CustomImageView.swift */; };
@@ -27,6 +28,8 @@
 		9C897ABE1EA07FC8004EB4DA /* UserSearchController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C897ABD1EA07FC8004EB4DA /* UserSearchController.swift */; };
 		9C897AC01EA085A9004EB4DA /* UserSearchCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9C897ABF1EA085A9004EB4DA /* UserSearchCell.swift */; };
 		9CAF88131EB00EF50049536D /* CameraController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CAF88121EB00EF50049536D /* CameraController.swift */; };
+		9CB766701EBB582B006CDBFD /* CommentCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB7666F1EBB582B006CDBFD /* CommentCell.swift */; };
+		9CB766721EBB5BCC006CDBFD /* Comment.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CB766711EBB5BCC006CDBFD /* Comment.swift */; };
 		9CC9ADF81E97E9CA006D5F05 /* HomeController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9ADF71E97E9CA006D5F05 /* HomeController.swift */; };
 		9CC9ADFA1E97EB15006D5F05 /* HomePostCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CC9ADF91E97EB15006D5F05 /* HomePostCell.swift */; };
 		9CCD45201E8654E600AAB7C9 /* LoginController.swift in Sources */ = {isa = PBXBuildFile; fileRef = 9CCD451F1E8654E600AAB7C9 /* LoginController.swift */; };
@@ -41,6 +44,7 @@
 		460C04DBBC87D195488F1A10 /* Pods_InstagramFirebase.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = Pods_InstagramFirebase.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		823A3E7963C778FF1BC4B448 /* Pods-InstagramFirebase.debug.xcconfig */ = {isa = PBXFileReference; includeInIndex = 1; lastKnownFileType = text.xcconfig; name = "Pods-InstagramFirebase.debug.xcconfig"; path = "Pods/Target Support Files/Pods-InstagramFirebase/Pods-InstagramFirebase.debug.xcconfig"; sourceTree = "<group>"; };
 		9C04A7A61EB240A700386604 /* PreviewPhotoContainerView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = PreviewPhotoContainerView.swift; path = Camera/PreviewPhotoContainerView.swift; sourceTree = "<group>"; };
+		9C0EF0D51EB6466600B4BCE6 /* CommentsController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentsController.swift; path = Home/CommentsController.swift; sourceTree = "<group>"; };
 		9C16E6391E96A2D100CAD7C9 /* Post.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Post.swift; path = Models/Post.swift; sourceTree = "<group>"; };
 		9C16E63B1E96A5D600CAD7C9 /* UserProfilePhotoCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserProfilePhotoCell.swift; path = UserProfileHeader/UserProfilePhotoCell.swift; sourceTree = "<group>"; };
 		9C16E63D1E96ACB700CAD7C9 /* CustomImageView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CustomImageView.swift; path = Extension/CustomImageView.swift; sourceTree = "<group>"; };
@@ -61,6 +65,8 @@
 		9C897ABD1EA07FC8004EB4DA /* UserSearchController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserSearchController.swift; path = Search/UserSearchController.swift; sourceTree = "<group>"; };
 		9C897ABF1EA085A9004EB4DA /* UserSearchCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = UserSearchCell.swift; path = Search/UserSearchCell.swift; sourceTree = "<group>"; };
 		9CAF88121EB00EF50049536D /* CameraController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CameraController.swift; path = Camera/CameraController.swift; sourceTree = "<group>"; };
+		9CB7666F1EBB582B006CDBFD /* CommentCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = CommentCell.swift; path = Home/CommentCell.swift; sourceTree = "<group>"; };
+		9CB766711EBB5BCC006CDBFD /* Comment.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = Comment.swift; path = Models/Comment.swift; sourceTree = "<group>"; };
 		9CC9ADF71E97E9CA006D5F05 /* HomeController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomeController.swift; path = Home/HomeController.swift; sourceTree = "<group>"; };
 		9CC9ADF91E97EB15006D5F05 /* HomePostCell.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; name = HomePostCell.swift; path = Home/HomePostCell.swift; sourceTree = "<group>"; };
 		9CCD451F1E8654E600AAB7C9 /* LoginController.swift */ = {isa = PBXFileReference; explicitFileType = sourcecode.swift; fileEncoding = 4; name = LoginController.swift; path = Login/LoginController.swift; sourceTree = "<group>"; };
@@ -105,6 +111,7 @@
 			isa = PBXGroup;
 			children = (
 				9C16E6391E96A2D100CAD7C9 /* Post.swift */,
+				9CB766711EBB5BCC006CDBFD /* Comment.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -204,6 +211,8 @@
 			children = (
 				9CC9ADF71E97E9CA006D5F05 /* HomeController.swift */,
 				9CC9ADF91E97EB15006D5F05 /* HomePostCell.swift */,
+				9C0EF0D51EB6466600B4BCE6 /* CommentsController.swift */,
+				9CB7666F1EBB582B006CDBFD /* CommentCell.swift */,
 			);
 			name = Home;
 			sourceTree = "<group>";
@@ -255,6 +264,7 @@
 				9C5DCC361E81857B0048C03A /* Resources */,
 				A23BFEEE6F48A4CDD831834C /* [CP] Embed Pods Frameworks */,
 				4861AE44DE8454B9EF5F60F9 /* [CP] Copy Pods Resources */,
+				9CB766731EBB60EC006CDBFD /* SwiftLint */,
 			);
 			buildRules = (
 			);
@@ -330,6 +340,20 @@
 			shellScript = "\"${SRCROOT}/Pods/Target Support Files/Pods-InstagramFirebase/Pods-InstagramFirebase-resources.sh\"\n";
 			showEnvVarsInLog = 0;
 		};
+		9CB766731EBB60EC006CDBFD /* SwiftLint */ = {
+			isa = PBXShellScriptBuildPhase;
+			buildActionMask = 2147483647;
+			files = (
+			);
+			inputPaths = (
+			);
+			name = SwiftLint;
+			outputPaths = (
+			);
+			runOnlyForDeploymentPostprocessing = 0;
+			shellPath = /bin/sh;
+			shellScript = "if which swiftlint >/dev/null; then\n    swiftlint\nelse\n    echo \"warning: SwiftLint not installed, download from https://github.com/realm/SwiftLint\"\nfi";
+		};
 		A23BFEEE6F48A4CDD831834C /* [CP] Embed Pods Frameworks */ = {
 			isa = PBXShellScriptBuildPhase;
 			buildActionMask = 2147483647;
@@ -372,6 +396,8 @@
 				9C04A7A71EB240A700386604 /* PreviewPhotoContainerView.swift in Sources */,
 				9C5DCC511E818A350048C03A /* SignUpController.swift in Sources */,
 				9C770F741E8DCBD800756135 /* PhotoSelectController.swift in Sources */,
+				9CB766701EBB582B006CDBFD /* CommentCell.swift in Sources */,
+				9C0EF0D61EB6466600B4BCE6 /* CommentsController.swift in Sources */,
 				9CEA01851E833F78004F5BEB /* MainTabBarController.swift in Sources */,
 				9C897AC01EA085A9004EB4DA /* UserSearchCell.swift in Sources */,
 				9C16E63E1E96ACB700CAD7C9 /* CustomImageView.swift in Sources */,
@@ -386,6 +412,7 @@
 				9CAF88131EB00EF50049536D /* CameraController.swift in Sources */,
 				9CFEEB8C1EB58CAE009C0DE9 /* CustomAnimationDismisser.swift in Sources */,
 				9CC9ADF81E97E9CA006D5F05 /* HomeController.swift in Sources */,
+				9CB766721EBB5BCC006CDBFD /* Comment.swift in Sources */,
 				9C16E63C1E96A5D600CAD7C9 /* UserProfilePhotoCell.swift in Sources */,
 				9C6092A71E840291004F9C4E /* User.swift in Sources */,
 				9C897ABE1EA07FC8004EB4DA /* UserSearchController.swift in Sources */,
