@@ -12,18 +12,35 @@ class CommentCell: UICollectionViewCell {
 
   var comment: Comment? {
     didSet {
-      textLabel.text = comment?.text
+      guard let comment = comment else { return }
+
+      let attributedText = NSMutableAttributedString(string: comment.user.username,
+                                                     attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)])
+
+      attributedText.append(NSAttributedString(string: " " + comment.text,
+                                               attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14)]))
+
+      textLabel.attributedText = attributedText
+      profileImageView.loadImage(urlString: comment.user.profileImageURL)
     }
   }
 
-  let textLabel = UILabel() <== {
+  let textLabel = UITextView() <== {
     $0.font = UIFont.systemFont(ofSize: 14)
-    $0.numberOfLines = 0
+    $0.isScrollEnabled = false
+    $0.isUserInteractionEnabled = false
+  }
+
+  let profileImageView = CustomImageView() <== {
+    $0.clipsToBounds = true
+    $0.contentMode = .scaleAspectFill
+    $0.backgroundColor = .blue
+    $0.layer.cornerRadius = 40 / 2
   }
 
   override init(frame: CGRect) {
     super.init(frame: frame)
-    backgroundColor = .yellow
+    addSubview(profileImageView)
     addSubview(textLabel)
     setupLayout()
   }
@@ -33,7 +50,8 @@ class CommentCell: UICollectionViewCell {
   }
 
   fileprivate func setupLayout() {
-    textLabel.anchor(top: topAnchor, left: leftAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 4, paddingBottom: 4, paddingRight: 4, width: 0, height: 0)
+    profileImageView.anchor(top: topAnchor, left: leftAnchor, bottom: nil, right: nil, paddingTop: 8, paddingLeft: 8, paddingBottom: 0, paddingRight: 0, width: 40, height: 40)
+    textLabel.anchor(top: topAnchor, left: profileImageView.rightAnchor, bottom: bottomAnchor, right: rightAnchor, paddingTop: 4, paddingLeft: 4, paddingBottom: 4, paddingRight: 4, width: 0, height: 0)
   }
 
 }
