@@ -19,7 +19,7 @@ class UserProfileController: UICollectionViewController {
   var user: User?
   var posts = [Post]()
   var userID: String?
-
+  var isFinishedPaging = false
   var isGridView = true
 
   // MARK: - View Life Cycle
@@ -67,9 +67,56 @@ class UserProfileController: UICollectionViewController {
       self.user = user
       self.navigationItem.title = self.user?.username
       self.collectionView?.reloadData()
-      self.fetchOrderedPosts()
+      self.paginatePosts()
     }
 
+  }
+
+  // MARK: - Pagination
+
+  fileprivate func paginatePosts() {
+    print("Start paging for more posts")
+    guard let uid = self.user?.uid else { return }
+    let ref = FIRDatabase.database().reference().child("posts").child(uid)
+
+    var query = ref.queryOrderedByKey()
+
+    if posts.count > 0 {
+      let value = posts.last?.id
+      query = query.queryStarting(atValue: value)
+    }
+
+    query.queryLimited(toFirst: 4).observeSingleEvent(of: .value, with: { (snapshot) in
+
+      guard var allObjects = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+
+      if allObjects.count < 4 {
+        self.isFinishedPaging = true
+      }
+
+      if self.posts.count > 0 {
+        allObjects.removeFirst()
+      }
+
+      guard let user = self.user else { return }
+
+      allObjects.forEach({ (snapshot) in
+        guard let dictionary = snapshot.value as? [String: Any] else { return }
+        var post = Post(user: user, dictionary: dictionary)
+        post.id = snapshot.key
+        self.posts.append(post)
+//        print(snapshot.key)
+      })
+
+      self.posts.forEach({ (post) in
+        print(post.id ?? "")
+      })
+
+      self.collectionView?.reloadData()
+
+    }) { (err) in
+      print("Failed to paginate for posts:", err)
+    }
   }
 
   // MARK: - Log out
@@ -107,6 +154,12 @@ class UserProfileController: UICollectionViewController {
   }
 
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+
+    // fire off the paginate cell
+    if indexPath.item == self.posts.count - 1 && isFinishedPaging {
+      print("Paginating for posts")
+      paginatePosts()
+    }
 
     if isGridView {
       guard let cell = collectionView.dequeueReusableCell(withReuseIdentifier: cellId, for: indexPath) as? UserProfilePhotoCell else { return UICollectionViewCell() }
