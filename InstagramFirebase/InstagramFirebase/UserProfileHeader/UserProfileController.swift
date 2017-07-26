@@ -79,22 +79,26 @@ class UserProfileController: UICollectionViewController {
     guard let uid = self.user?.uid else { return }
     let ref = FIRDatabase.database().reference().child("posts").child(uid)
 
-    var query = ref.queryOrderedByKey()
+    var query = ref.queryOrdered(byChild: "creationDate")
+//    var query = ref.queryOrderedByKey()
 
     if posts.count > 0 {
-      let value = posts.last?.id
-      query = query.queryStarting(atValue: value)
+//      let value = posts.last?.id
+      let value = posts.last?.creationDate.timeIntervalSince1970
+      query = query.queryEnding(atValue: value)
     }
 
-    query.queryLimited(toFirst: 4).observeSingleEvent(of: .value, with: { (snapshot) in
+    query.queryLimited(toLast: 4).observeSingleEvent(of: .value, with: { (snapshot) in
 
       guard var allObjects = snapshot.children.allObjects as? [FIRDataSnapshot] else { return }
+
+      allObjects.reverse()
 
       if allObjects.count < 4 {
         self.isFinishedPaging = true
       }
 
-      if self.posts.count > 0 {
+      if self.posts.count > 0 && allObjects.count > 0 {
         allObjects.removeFirst()
       }
 
@@ -156,7 +160,7 @@ class UserProfileController: UICollectionViewController {
   override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
 
     // fire off the paginate cell
-    if indexPath.item == self.posts.count - 1 && isFinishedPaging {
+    if indexPath.item == self.posts.count - 1 && !isFinishedPaging {
       print("Paginating for posts")
       paginatePosts()
     }
