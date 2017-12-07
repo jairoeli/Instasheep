@@ -55,11 +55,11 @@ class PreviewPhotoContainerView: UIView {
 
   // MARK: - Handle actions
 
-  func handleCancel() {
+  @objc func handleCancel() {
     self.removeFromSuperview()
   }
 
-  func handleSave() {
+  @objc func handleSave() {
     print("Handling save...")
 
     guard let previewImage = previewImageView.image else { return }

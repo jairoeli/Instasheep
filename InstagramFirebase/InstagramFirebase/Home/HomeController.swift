@@ -38,18 +38,18 @@ class HomeController: UICollectionViewController, HomePostCellDelegate {
     navigationItem.leftBarButtonItem = UIBarButtonItem(image: #imageLiteral(resourceName: "camera3").withRenderingMode(.alwaysOriginal), style: .plain, target: self, action: #selector(handleCamera))
   }
 
-  func handleCamera() {
+  @objc func handleCamera() {
     let cameraController = CameraController()
     present(cameraController, animated: true, completion: nil)
   }
 
-  func handleRefresh() {
+  @objc func handleRefresh() {
     posts.removeAll()
     fetchAllPosts()
   }
 
   // MARK: - Notification
-  func handleUpdateFeed() {
+  @objc func handleUpdateFeed() {
     handleRefresh()
   }
 
@@ -61,9 +61,9 @@ class HomeController: UICollectionViewController, HomePostCellDelegate {
   }
 
   fileprivate func fetchPosts() {
-    guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+    guard let uid = Auth.auth().currentUser?.uid else { return }
 
-    FIRDatabase.fetchUserWith(uid: uid) { (user) in
+    Database.fetchUserWith(uid: uid) { (user) in
       self.fetchPostsWith(user: user)
     }
 
@@ -71,7 +71,7 @@ class HomeController: UICollectionViewController, HomePostCellDelegate {
 
   fileprivate func fetchPostsWith(user: User) {
 
-    let ref = FIRDatabase.database().reference().child("posts").child(user.uid)
+    let ref = Database.database().reference().child("posts").child(user.uid)
     ref.observeSingleEvent(of: .value, with: { (snapshot) in
 
       self.collectionView?.refreshControl?.endRefreshing()
@@ -84,8 +84,8 @@ class HomeController: UICollectionViewController, HomePostCellDelegate {
         var post = Post(user: user, dictionary: dictionary)
         post.id = key
 
-        guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
-        FIRDatabase.database().reference().child("likes").child(key).child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+        guard let uid = Auth.auth().currentUser?.uid else { return }
+        Database.database().reference().child("likes").child(key).child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
 
           if let value = snapshot.value as? Int, value == 1 {
             post.hasLiked = true
@@ -111,13 +111,13 @@ class HomeController: UICollectionViewController, HomePostCellDelegate {
   }
 
   fileprivate func fetchFollowingUserIds() {
-    guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
-    FIRDatabase.database().reference().child("Following").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+    guard let uid = Auth.auth().currentUser?.uid else { return }
+    Database.database().reference().child("Following").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
 
       guard let userIdsDictionary = snapshot.value as? [String: Any] else { return }
 
       userIdsDictionary.forEach({ (key, _) in
-        FIRDatabase.fetchUserWith(uid: key, completion: { (user) in
+        Database.fetchUserWith(uid: key, completion: { (user) in
           self.fetchPostsWith(user: user)
         })
       })
@@ -143,10 +143,10 @@ class HomeController: UICollectionViewController, HomePostCellDelegate {
     print(post.caption)
 
     guard let postID = post.id else { return }
-    guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+    guard let uid = Auth.auth().currentUser?.uid else { return }
 
     let values = [uid: post.hasLiked == true ? 0 : 1]
-    FIRDatabase.database().reference().child("likes").child(postID).updateChildValues(values) { (err, _) in
+    Database.database().reference().child("likes").child(postID).updateChildValues(values) { (err, _) in
       if let err = err {
         print("Failed to like post:", err)
         return

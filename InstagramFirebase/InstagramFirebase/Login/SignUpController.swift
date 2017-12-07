@@ -67,9 +67,9 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
   }
 
   lazy var alreadyHaveAccountButton = UIButton(type: .system) <== {
-    let attributedTitle = NSMutableAttributedString(string: "Already have an account?  ", attributes: [NSFontAttributeName: UIFont.systemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.lightGray])
+    let attributedTitle = NSMutableAttributedString(string: "Already have an account?  ", attributes: [NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.lightGray])
 
-    attributedTitle.append(NSAttributedString(string: "Sign In", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14), NSForegroundColorAttributeName: UIColor.rgb(red: 17, green: 154, blue: 237)]))
+    attributedTitle.append(NSAttributedString(string: "Sign In", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14), NSAttributedStringKey.foregroundColor: UIColor.rgb(red: 17, green: 154, blue: 237)]))
 
     $0.setAttributedTitle(attributedTitle, for: .normal)
     $0.addTarget(self, action: #selector(handleAlreadyHaveAccount), for: .touchUpInside)
@@ -109,17 +109,17 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
   }
 
   // MARK: - Handle Login
-  func handleAlreadyHaveAccount() {
+  @objc func handleAlreadyHaveAccount() {
     _ = navigationController?.popViewController(animated: true)
   }
 
   // MARK: - Firebase User
-  func handleSignUp() {
-    guard let email = emailTextField.text, email.characters.count > 0 else { return }
-    guard let username = usernameTextField.text, username.characters.count > 0 else { return }
-    guard let password = passwordTextField.text, password.characters.count > 0 else { return }
+  @objc func handleSignUp() {
+    guard let email = emailTextField.text, email.count > 0 else { return }
+    guard let username = usernameTextField.text, username.count > 0 else { return }
+    guard let password = passwordTextField.text, password.count > 0 else { return }
 
-    FIRAuth.auth()?.createUser(withEmail: email, password: password, completion: { (user: FIRUser?, error: Error?) in
+    Auth.auth().createUser(withEmail: email, password: password, completion: { (user, error: Error?) in
 
       if let err = error {
         print("Failed to create user:", err)
@@ -131,7 +131,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
       guard let uploadData = UIImageJPEGRepresentation(image, 0.3) else { return }
       let filename = NSUUID().uuidString
 
-      FIRStorage.storage().reference().child("profile_image").child(filename).put(uploadData, metadata: nil, completion: { (metadata, err) in
+      Storage.storage().reference().child("profile_image").child(filename).putData(uploadData, metadata: nil, completion: { (metadata, err) in
 
         if let err = error {
           print("Failed to upload profile image:", err)
@@ -144,7 +144,7 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
         let dictionaryValues = ["username": username, "profileImageURL": profileImageURL]
         let values = [uid: dictionaryValues]
 
-        FIRDatabase.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, _) in
+        Database.database().reference().child("users").updateChildValues(values, withCompletionBlock: { (err, _) in
 
           if let err = err {
             print("Failed to save user info into db:", err)
@@ -161,8 +161,8 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
     })
   }
 
-  func handleTextInputChange() {
-    let isFormValid = emailTextField.text?.characters.count ?? 0 > 0 && usernameTextField.text?.characters.count ?? 0 > 0 && passwordTextField.text?.characters.count ?? 0 > 0
+  @objc func handleTextInputChange() {
+    let isFormValid = emailTextField.text?.count ?? 0 > 0 && usernameTextField.text?.count ?? 0 > 0 && passwordTextField.text?.count ?? 0 > 0
 
     if isFormValid {
       signUpButton.isEnabled = true
@@ -175,14 +175,14 @@ class SignUpController: UIViewController, UIImagePickerControllerDelegate, UINav
   }
 
   // MARK: - UIImagePickerController
-  func handlePlusPhoto() {
+  @objc func handlePlusPhoto() {
     let imagePickerController = UIImagePickerController()
     imagePickerController.delegate = self
     imagePickerController.allowsEditing = true
     present(imagePickerController, animated: true, completion: nil)
   }
 
-  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String : Any]) {
+  func imagePickerController(_ picker: UIImagePickerController, didFinishPickingMediaWithInfo info: [String: Any]) {
 
     if let editedImage = info["UIImagePickerControllerEditedImage"] as? UIImage {
       plusPhotoButton.setImage(editedImage.withRenderingMode(.alwaysOriginal), for: .normal)

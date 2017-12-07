@@ -44,11 +44,11 @@ class PhotoSelectorController: UICollectionViewController {
 
   // MARK: - Handles
 
-  func handleCancel() {
+  @objc func handleCancel() {
     dismiss(animated: true, completion: nil)
   }
 
-  func handleNext() {
+  @objc func handleNext() {
     let sharePhotoController = SharePhotoController()
     sharePhotoController.selectedImage = header?.photoImageView.image
     navigationController?.pushViewController(sharePhotoController, animated: true)

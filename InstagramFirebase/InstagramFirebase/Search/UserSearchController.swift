@@ -48,14 +48,14 @@ class UserSearchController: UICollectionViewController, UICollectionViewDelegate
 
   fileprivate func fetchUsers() {
     print("Fetching users")
-    let ref = FIRDatabase.database().reference().child("users")
+    let ref = Database.database().reference().child("users")
     ref.observeSingleEvent(of: .value, with: { (snapshot) in
 
       guard let dictionaries = snapshot.value as? [String: Any] else { return }
 
       dictionaries.forEach({ (key, value) in
 
-        if key == FIRAuth.auth()?.currentUser?.uid {
+        if key == Auth.auth().currentUser?.uid {
           print("Found myself, omit from the list")
           return
         }

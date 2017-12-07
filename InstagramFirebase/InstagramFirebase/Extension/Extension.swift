@@ -62,10 +62,10 @@ extension UIColor {
 
 }
 
-extension FIRDatabase {
+extension Database {
   static func fetchUserWith(uid: String, completion: @escaping (User) -> Void) {
 
-    FIRDatabase.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
+    Database.database().reference().child("users").child(uid).observeSingleEvent(of: .value, with: { (snapshot) in
       guard let userDicitonary = snapshot.value as? [String: Any] else { return }
 
       let user = User(uid: uid, dictionary: userDicitonary)

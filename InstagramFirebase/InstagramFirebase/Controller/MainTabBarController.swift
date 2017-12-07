@@ -30,7 +30,7 @@ class MainTabBarController: UITabBarController, UITabBarControllerDelegate {
 
     self.delegate = self
 
-    if FIRAuth.auth()?.currentUser == nil {
+    if Auth.auth().currentUser == nil {
       // show if not logged in
       DispatchQueue.main.async {
         let loginController = LoginController()

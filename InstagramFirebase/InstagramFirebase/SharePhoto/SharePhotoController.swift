@@ -49,15 +49,15 @@ class SharePhotoController: UIViewController {
 
   // MARK: - Share & Save
 
-  func handleShare() {
-    guard let caption = textView.text, caption.characters.count > 0 else { return }
+  @objc func handleShare() {
+    guard let caption = textView.text, caption.count > 0 else { return }
     guard let image = selectedImage else { return }
     guard let uploadData = UIImageJPEGRepresentation(image, 0.5) else { return }
 
     navigationItem.rightBarButtonItem?.isEnabled = false
 
     let filename = NSUUID().uuidString
-    FIRStorage.storage().reference().child("posts").child(filename).put(uploadData, metadata: nil) { (metadata, err) in
+    Storage.storage().reference().child("posts").child(filename).putData(uploadData, metadata: nil) { (metadata, err) in
 
       if let err = err {
          self.navigationItem.rightBarButtonItem?.isEnabled = true
@@ -76,8 +76,8 @@ class SharePhotoController: UIViewController {
     guard let postImage = selectedImage else { return }
     guard let caption = textView.text else { return }
 
-    guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
-    let userPostRef = FIRDatabase.database().reference().child("posts").child(uid)
+    guard let uid = Auth.auth().currentUser?.uid else { return }
+    let userPostRef = Database.database().reference().child("posts").child(uid)
     let ref = userPostRef.childByAutoId()
     let values = ["imageURL": imageURL,
                   "caption": caption,

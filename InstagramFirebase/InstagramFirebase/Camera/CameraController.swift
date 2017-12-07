@@ -51,13 +51,13 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
     return true
   }
 
-  func handleDismiss() {
+  @objc func handleDismiss() {
     dismiss(animated: true, completion: nil)
   }
 
   // MARK: - Capture Photo
 
-  func handleCapturePhoto() {
+  @objc func handleCapturePhoto() {
     print("Capturing photo...")
 
     let settings = AVCapturePhotoSettings()
@@ -67,7 +67,7 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
     output.capturePhoto(with: settings, delegate: self)
   }
 
-  func capture(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhotoSampleBuffer photoSampleBuffer: CMSampleBuffer?, previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
+  func photoOutput(_ captureOutput: AVCapturePhotoOutput, didFinishProcessingPhoto photoSampleBuffer: CMSampleBuffer?, previewPhoto previewPhotoSampleBuffer: CMSampleBuffer?, resolvedSettings: AVCaptureResolvedPhotoSettings, bracketSettings: AVCaptureBracketedStillImageSettings?, error: Error?) {
 
     let imageData = AVCapturePhotoOutput.jpegPhotoDataRepresentation(forJPEGSampleBuffer: photoSampleBuffer!, previewPhotoSampleBuffer: previewPhotoSampleBuffer!)
 
@@ -95,10 +95,10 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
     let captureSession = AVCaptureSession()
 
     // 1. setup inputs
-    let captureDevice = AVCaptureDevice.defaultDevice(withMediaType: AVMediaTypeVideo)
+    let captureDevice = AVCaptureDevice.default(for: AVMediaType.video)
 
     do {
-        let input = try AVCaptureDeviceInput(device: captureDevice)
+        let input = try AVCaptureDeviceInput(device: captureDevice!)
         if captureSession.canAddInput(input) {
           captureSession.addInput(input)
       }
@@ -112,7 +112,7 @@ class CameraController: UIViewController, AVCapturePhotoCaptureDelegate, UIViewC
     }
 
     // 3. setup output preview
-    guard let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession) else { return }
+    let previewLayer = AVCaptureVideoPreviewLayer(session: captureSession)
     previewLayer.frame = view.frame
     view.layer.addSublayer(previewLayer)
 

@@ -54,25 +54,25 @@ class UserProfileHeader: UICollectionViewCell {
   }
 
   let postsLabel = UILabel() <== {
-    let attributedText = NSMutableAttributedString(string: "11\n", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)])
-    attributedText.append(NSAttributedString(string: "posts", attributes: [NSForegroundColorAttributeName: UIColor.lightGray, NSFontAttributeName: UIFont.systemFont(ofSize: 14)]))
+    let attributedText = NSMutableAttributedString(string: "11\n", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)])
+    attributedText.append(NSAttributedString(string: "posts", attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]))
     $0.attributedText = attributedText
     $0.textAlignment = .center
     $0.numberOfLines = 0
   }
 
   let followersLabel = UILabel() <== {
-    let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)])
-    attributedText.append(NSAttributedString(string: "followers", attributes: [NSForegroundColorAttributeName: UIColor.lightGray, NSFontAttributeName: UIFont.systemFont(ofSize: 14)]))
+    let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)])
+    attributedText.append(NSAttributedString(string: "followers", attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray, NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]))
     $0.attributedText = attributedText
     $0.textAlignment = .center
     $0.numberOfLines = 0
   }
 
   let followingLabel = UILabel() <== {
-    let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSFontAttributeName: UIFont.boldSystemFont(ofSize: 14)])
-    attributedText.append(NSAttributedString(string: "following", attributes: [NSForegroundColorAttributeName: UIColor.lightGray,
-                                                                               NSFontAttributeName: UIFont.systemFont(ofSize: 14)]))
+    let attributedText = NSMutableAttributedString(string: "0\n", attributes: [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 14)])
+    attributedText.append(NSAttributedString(string: "following", attributes: [NSAttributedStringKey.foregroundColor: UIColor.lightGray,
+                                                                               NSAttributedStringKey.font: UIFont.systemFont(ofSize: 14)]))
     $0.attributedText = attributedText
     $0.textAlignment = .center
     $0.numberOfLines = 0
@@ -148,7 +148,7 @@ extension UserProfileHeader {
   }
 
   fileprivate func setupEditFollowButton() {
-    guard let currentLoggedInUserId = FIRAuth.auth()?.currentUser?.uid else { return }
+    guard let currentLoggedInUserId = Auth.auth().currentUser?.uid else { return }
 
     guard let userID = user?.uid else { return }
 
@@ -156,7 +156,7 @@ extension UserProfileHeader {
       // edit profile
     } else {
       // Check if following
-      FIRDatabase.database().reference().child("Following").child(currentLoggedInUserId).child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
+      Database.database().reference().child("Following").child(currentLoggedInUserId).child(userID).observeSingleEvent(of: .value, with: { (snapshot) in
 
         if let isFollowing = snapshot.value as? Int, isFollowing == 1 {
           self.editProfileFollowButton.setTitle("Unfollow", for: .normal)
@@ -183,25 +183,25 @@ extension UserProfileHeader {
 // MARK: - Handle actions
 extension UserProfileHeader {
 
-  func handleChangeToListView() {
+  @objc func handleChangeToListView() {
     listButton.tintColor = .mainBlue()
     gridButton.tintColor = UIColor(white: 0, alpha: 0.2)
     delegate?.didChangeToListView()
   }
 
-  func handleChangeToGridView() {
+  @objc func handleChangeToGridView() {
     gridButton.tintColor = .mainBlue()
     listButton.tintColor = UIColor(white: 0, alpha: 0.2)
     delegate?.didChangeToGridView()
   }
 
-  func handleEditProfileOrFollow() {
-    guard let currentLoggedInUserID = FIRAuth.auth()?.currentUser?.uid else { return }
+  @objc func handleEditProfileOrFollow() {
+    guard let currentLoggedInUserID = Auth.auth().currentUser?.uid else { return }
     guard let userID = user?.uid else { return }
 
     if editProfileFollowButton.titleLabel?.text == "Unfollow" {
       // Unfollow
-      FIRDatabase.database().reference().child("Following").child(currentLoggedInUserID).child(userID).removeValue(completionBlock: { (err, _) in
+      Database.database().reference().child("Following").child(currentLoggedInUserID).child(userID).removeValue(completionBlock: { (err, _) in
         if let err = err { print("Failed to unfolllow user: ", err); return }
         print("Successfully unfollowed user:", self.user?.username ?? "")
         self.setupFollowStyle()
@@ -209,7 +209,7 @@ extension UserProfileHeader {
 
     } else {
       // follow
-      let ref = FIRDatabase.database().reference().child("Following").child(currentLoggedInUserID)
+      let ref = Database.database().reference().child("Following").child(currentLoggedInUserID)
       let values = [userID: 1]
 
       ref.updateChildValues(values) { (err, _) in

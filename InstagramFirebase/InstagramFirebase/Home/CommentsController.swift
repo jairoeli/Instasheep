@@ -88,7 +88,7 @@ class CommentsController: UICollectionViewController {
   // MARK: - Fetch comments
   fileprivate func fetchComments() {
     guard let postID = self.post?.id else { return }
-    let ref = FIRDatabase.database().reference().child("comments").child(postID)
+    let ref = Database.database().reference().child("comments").child(postID)
 
     ref.observe(.childAdded, with: { (snapshot) in
 
@@ -96,7 +96,7 @@ class CommentsController: UICollectionViewController {
 
       guard let uid = dictionary["uid"] as? String else { return }
 
-      FIRDatabase.fetchUserWith(uid: uid, completion: { (user) in
+      Database.fetchUserWith(uid: uid, completion: { (user) in
         let comment = Comment(user: user, dictionary: dictionary)
         self.comments.append(comment)
         self.collectionView?.reloadData()
@@ -109,8 +109,8 @@ class CommentsController: UICollectionViewController {
 
   // MARK: - Handle Submit
 
-  func handleSubmit() {
-    guard let uid = FIRAuth.auth()?.currentUser?.uid else { return }
+  @objc func handleSubmit() {
+    guard let uid = Auth.auth().currentUser?.uid else { return }
 
     print("post id:", self.post?.id ?? "")
     print("Inserting comment:", commentTextField.text ?? "")
@@ -118,7 +118,7 @@ class CommentsController: UICollectionViewController {
     let postID = self.post?.id ?? ""
     let values = ["text": commentTextField.text ?? "", "creationDate": Date().timeIntervalSince1970, "uid": uid] as [String: Any]
 
-    FIRDatabase.database().reference().child("comments").child(postID).childByAutoId().updateChildValues(values) { (err, _) in
+    Database.database().reference().child("comments").child(postID).childByAutoId().updateChildValues(values) { (err, _) in
 
       if let err = err {
         print("Failed to insert comment:", err)
