@@ -39,6 +39,35 @@ class AppDelegate: UIResponder, UIApplicationDelegate, MessagingDelegate, UNUser
     completionHandler(.alert)
   }
 
+  func userNotificationCenter(_ center: UNUserNotificationCenter, didReceive response: UNNotificationResponse, withCompletionHandler completionHandler: @escaping () -> Void) {
+
+    let userInfo = response.notification.request.content.userInfo
+
+    if let followerId = userInfo["followerId"] as? String {
+      print(followerId)
+
+      // push the UserProfileController for followerId
+      let userProfileController = UserProfileController(collectionViewLayout: UICollectionViewFlowLayout())
+      userProfileController.userID = followerId
+
+      // access the main UI from AppDelegate
+      if let mainTabBarController = window?.rootViewController as? MainTabBarController {
+
+        mainTabBarController.selectedIndex = 0
+
+        mainTabBarController.presentedViewController?.dismiss(animated: true, completion: nil)
+
+        if let homeNavigationController = mainTabBarController.viewControllers?.first as? UINavigationController {
+
+          homeNavigationController.pushViewController(userProfileController, animated: true)
+
+        }
+
+      }
+    }
+
+  }
+
   private func attemtpRegisterForNotifications(application: UIApplication) {
     print("Ateempting to register APNS...")
 
